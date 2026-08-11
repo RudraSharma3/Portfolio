@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rudra Sharma — AI &amp; Data Engineer</title>
+<meta name="description" content="Rudra Sharma is an AI &amp; Data Engineer building production-oriented RAG systems, ML models, and data pipelines. Currently a Data Engineering Intern at BytePX." />
+<link rel="canonical" href="https://rudrasharma.dev/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Rudra Sharma — AI & Data Engineer" />
+<meta property="og:description" content="Production-oriented AI, data, and backend systems — RAG applications, ML models, and scalable data pipelines." />
+<meta property="og:url" content="https://rudrasharma.dev/" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Rudra Sharma — AI & Data Engineer" />
+<meta name="twitter:description" content="Production-oriented AI, data, and backend systems — RAG applications, ML models, and scalable data pipelines." />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Rudra Sharma",
+  "jobTitle": "AI & Data Engineer",
+  "address": { "@type": "PostalAddress", "addressLocality": "Jaipur", "addressCountry": "IN" },
+  "email": "mailto:rudrasharma93511@gmail.com",
+  "sameAs": [
+    "https://github.com/RudraSharma3",
+    "https://www.linkedin.com/in/rudra-sharma-3508a227b"
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+  :root{
+    --void:#0A0C10;
+    --panel:#12151C;
+    --panel-2:#171B24;
+    --line:rgba(255,255,255,0.08);
+    --line-2:rgba(255,255,255,0.14);
+    --electric:#4C6FFF;
+    --violet:#8B5CF6;
+    --cyan:#22D3C7;
+    --ink:#F5F6F8;
+    --ink-dim:#9AA3B2;
+    --ink-faint:#5B6272;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  ::selection{background:var(--electric);color:#fff;}
+  body{background:var(--void);color:var(--ink);font-family:'Inter',sans-serif;overflow-x:hidden;}
+  .font-display{font-family:'Space Grotesk',sans-serif;}
+  .font-mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--cyan); outline-offset:3px;}
+
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:2; opacity:.03; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .bg-glow{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(700px circle at 12% 6%, rgba(76,111,255,0.13), transparent 60%),
+      radial-gradient(800px circle at 92% 14%, rgba(139,92,246,0.10), transparent 60%);
+  }
+  .grid-lines{
+    position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.3;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 55% at 50% 0%, black 35%, transparent 85%);
+  }
+  section{position:relative; z-index:1;}
+  .container{max-width:1120px; margin:0 auto; padding:0 32px;}
+  @media(max-width:768px){.container{padding:0 20px;}}
+  .glass{background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015)); border:1px solid var(--line);}
+  .eyebrow{font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--cyan); display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--cyan); box-shadow:0 0 12px var(--cyan);}
+  .grad-text{background:linear-gradient(120deg,#fff 0%, #fff 45%, var(--cyan) 80%, var(--electric) 100%); -webkit-background-clip:text; background-clip:text; color:transparent;}
+
+  .btn{display:inline-flex; align-items:center; gap:10px; font-weight:600; font-size:14.5px; padding:14px 26px; border-radius:100px; cursor:pointer; transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, border-color .35s, background .35s; white-space:nowrap; text-decoration:none;}
+  .btn-primary{background:linear-gradient(135deg, var(--electric), var(--violet)); color:#fff; box-shadow:0 8px 30px -10px rgba(76,111,255,.55);}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 14px 36px -10px rgba(76,111,255,.7);}
+  .btn-ghost{background:rgba(255,255,255,0.03); border:1px solid var(--line-2);}
+  .btn-ghost:hover{background:rgba(255,255,255,0.07); transform:translateY(-2px); border-color:rgba(255,255,255,.28);}
+
+  .nav{position:fixed; top:0; left:0; right:0; z-index:50; padding:18px 0; transition:background .4s, padding .4s, border-color .4s; border-bottom:1px solid transparent;}
+  .nav.scrolled{background:rgba(10,12,16,0.75); backdrop-filter:blur(16px); border-bottom:1px solid var(--line); padding:12px 0;}
+  .nav-inner{display:flex; align-items:center; justify-content:space-between;}
+  .logo{display:flex; align-items:center; gap:10px; font-family:'Space Grotesk'; font-weight:600; font-size:16.5px; text-decoration:none;}
+  .logo-mark{width:29px; height:29px; border-radius:8px; background:linear-gradient(135deg, var(--electric), var(--violet)); display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono'; font-size:12.5px; font-weight:600; color:#fff;}
+  .nav-links{display:flex; gap:30px; align-items:center;}
+  .nav-links a{color:var(--ink-dim); text-decoration:none; font-size:14px; font-weight:500; transition:color .25s; position:relative;}
+  .nav-links a:hover{color:var(--ink);}
+  @media(max-width:900px){.nav-links{display:none;}}
+
+  .mobile-toggle{display:none; width:38px; height:38px; border-radius:9px; border:1px solid var(--line-2); background:rgba(255,255,255,.03); align-items:center; justify-content:center; cursor:pointer;}
+  .mobile-toggle span{display:block; width:16px; height:1.5px; background:var(--ink); position:relative; transition:transform .3s, opacity .3s;}
+  .mobile-toggle span::before, .mobile-toggle span::after{content:''; position:absolute; left:0; width:16px; height:1.5px; background:var(--ink); transition:transform .3s;}
+  .mobile-toggle span::before{top:-5px;}
+  .mobile-toggle span::after{top:5px;}
+  .mobile-toggle.open span{background:transparent;}
+  .mobile-toggle.open span::before{transform:translateY(5px) rotate(45deg);}
+  .mobile-toggle.open span::after{transform:translateY(-5px) rotate(-45deg);}
+  @media(max-width:900px){.mobile-toggle{display:flex;}}
+
+  .mobile-menu{
+    display:none; position:fixed; top:0; right:0; bottom:0; width:min(78vw, 320px); z-index:60;
+    background:rgba(10,12,16,0.98); border-left:1px solid var(--line); backdrop-filter:blur(16px);
+    padding:100px 28px 40px; flex-direction:column; gap:6px;
+    transform:translateX(100%); transition:transform .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .mobile-menu.open{display:flex; transform:translateX(0);}
+  .mobile-menu a{color:var(--ink); text-decoration:none; font-family:'Space Grotesk'; font-size:20px; font-weight:600; padding:14px 0; border-bottom:1px solid var(--line);}
+  .mobile-menu a.btn{margin-top:20px; text-align:center; justify-content:center; font-family:'Inter'; font-size:14.5px; border-bottom:none;}
+  .mobile-scrim{display:none; position:fixed; inset:0; z-index:55; background:rgba(0,0,0,.5); backdrop-filter:blur(2px);}
+  .mobile-scrim.open{display:block;}
+  @media(min-width:901px){.mobile-menu, .mobile-scrim{display:none !important;}}
+
+  /* ---------- hero ---------- */
+  .hero{min-height:92svh; display:flex; align-items:center; padding-top:120px; padding-bottom:60px;}
+  .hero-grid{display:grid; grid-template-columns:1fr .92fr; gap:56px; align-items:center;}
+  @media(max-width:980px){.hero-grid{grid-template-columns:1fr; gap:48px;}}
+  .status-pill{display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono'; font-size:12px; color:var(--ink-dim); border:1px solid var(--line-2); border-radius:100px; padding:7px 14px 7px 10px; margin-bottom:24px;}
+  .status-dot{width:7px; height:7px; border-radius:50%; background:#34D399; box-shadow:0 0 10px #34D399;}
+  h1.hero-title{font-family:'Space Grotesk'; font-weight:600; font-size:clamp(38px, 5vw, 64px); line-height:1.06; letter-spacing:-.02em; margin-bottom:6px;}
+  .hero-role{font-family:'JetBrains Mono'; font-size:15px; color:var(--cyan); margin-bottom:22px; letter-spacing:.02em;}
+  .hero-sub{font-size:17.5px; line-height:1.65; color:var(--ink-dim); max-width:480px; margin-bottom:34px;}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:34px;}
+  .hero-social{display:flex; align-items:center; gap:20px; font-family:'JetBrains Mono'; font-size:12.5px; color:var(--ink-faint);}
+  .hero-social a{color:var(--ink-dim); text-decoration:none; display:flex; align-items:center; gap:7px; transition:color .25s;}
+  .hero-social a:hover{color:var(--cyan);}
+  .hero-social .dot-sep{width:3px; height:3px; border-radius:50%; background:var(--ink-faint);}
+
+  .visual-card{border-radius:20px; padding:22px 20px 18px; position:relative; overflow:hidden; transition:transform .2s ease-out;}
+  .visual-label{font-family:'JetBrains Mono'; font-size:11px; color:var(--ink-faint); letter-spacing:.05em; margin-bottom:14px; display:flex; justify-content:space-between;}
+  #pipelineCanvas{display:block; width:100%; height:320px;}
+
+  .sec-head{max-width:600px; margin-bottom:52px;}
+  .sec-title{font-family:'Space Grotesk'; font-weight:600; letter-spacing:-.015em; font-size:clamp(28px, 3.2vw, 40px); margin-top:14px; line-height:1.14;}
+  .sec-desc{color:var(--ink-dim); font-size:15.5px; line-height:1.7; margin-top:14px; max-width:540px;}
+  .sec-pad{padding:110px 0;}
+  @media(max-width:768px){.sec-pad{padding:76px 0;}}
+
+  /* ---------- selected work ---------- */
+  .feature-case{border-radius:22px; padding:44px; margin-bottom:26px;}
+  @media(max-width:768px){.feature-case{padding:26px 20px;}}
+  .case-top{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:26px;}
+  .case-title{font-family:'Space Grotesk'; font-size:26px; font-weight:600;}
+  .case-tagline{color:var(--ink-dim); font-size:14px; margin-top:6px;}
+  .case-links{display:flex; gap:10px;}
+  .case-links a{width:38px; height:38px; border-radius:10px; border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center; text-decoration:none; transition:border-color .25s, background .25s;}
+  .case-links a:hover{border-color:var(--cyan); background:rgba(34,211,199,.06);}
+  .proj-gh:hover{border-color:var(--cyan); background:rgba(34,211,199,.06);}
+
+  .case-metrics{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:32px;}
+  @media(max-width:700px){.case-metrics{grid-template-columns:repeat(2,1fr);}}
+  .metric{border-top:1px solid var(--line); padding-top:14px;}
+  .metric-num{font-family:'Space Grotesk'; font-size:24px; font-weight:600; color:var(--ink);}
+  .metric-label{font-family:'JetBrains Mono'; font-size:10.5px; color:var(--ink-faint); margin-top:4px; text-transform:uppercase; letter-spacing:.04em;}
+
+  .case-body{display:grid; grid-template-columns:1fr 1fr; gap:36px;}
+  @media(max-width:800px){.case-body{grid-template-columns:1fr; gap:26px;}}
+  .case-block h4{font-family:'JetBrains Mono'; font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); margin-bottom:10px;}
+  .case-block p{color:var(--ink-dim); font-size:14.5px; line-height:1.75;}
+  .case-stack{display:flex; flex-wrap:wrap; gap:7px; margin-top:18px;}
+  .case-stack span{font-family:'JetBrains Mono'; font-size:11px; color:var(--ink-dim); border:1px solid var(--line); padding:5px 10px; border-radius:6px;}
+
+  .case-diagram{margin-top:30px; border-top:1px solid var(--line); padding-top:26px;}
+  .case-diagram h4{font-family:'JetBrains Mono'; font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); margin-bottom:16px;}
+
+  .proj-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  @media(max-width:900px){.proj-grid{grid-template-columns:1fr;}}
+  .proj-card{border-radius:16px; padding:26px; cursor:pointer; transition:border-color .3s, transform .3s;}
+  .proj-card:hover{transform:translateY(-3px); border-color:rgba(255,255,255,.2);}
+  .proj-tag{font-family:'JetBrains Mono'; font-size:10.5px; color:var(--cyan); letter-spacing:.05em; text-transform:uppercase; margin-bottom:12px; display:block;}
+  .proj-title{font-family:'Space Grotesk'; font-size:18px; font-weight:600; margin-bottom:10px;}
+  .proj-desc{color:var(--ink-dim); font-size:13.5px; line-height:1.65;}
+  .proj-more{max-height:0; overflow:hidden; transition:max-height .45s ease, margin-top .45s ease;}
+  .proj-card.open .proj-more{max-height:260px; margin-top:14px;}
+  .proj-more-inner{border-top:1px solid var(--line); padding-top:14px;}
+  .proj-more p{color:var(--ink-dim); font-size:13px; line-height:1.65; margin-bottom:10px;}
+  .proj-stack{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;}
+  .proj-stack span{font-family:'JetBrains Mono'; font-size:10px; color:var(--ink-faint); border:1px solid var(--line); padding:4px 8px; border-radius:5px;}
+  .proj-result{font-family:'JetBrains Mono'; font-size:11.5px; color:var(--cyan);}
+  .proj-toggle{font-family:'JetBrains Mono'; font-size:11px; color:var(--ink-faint); margin-top:14px; display:flex; align-items:center; gap:6px;}
+
+  /* ---------- experience ---------- */
+  .tl{position:relative; margin-top:6px;}
+  .tl::before{content:''; position:absolute; left:11px; top:8px; bottom:8px; width:1px; background:linear-gradient(to bottom, var(--electric), var(--violet), transparent);}
+  .tl-item{position:relative; padding-left:44px; padding-bottom:46px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item.current .tl-role{color:var(--ink);}
+  .tl-item.current .tl-dot{border-color:var(--cyan); box-shadow:0 0 0 4px rgba(34,211,199,.08);}
+  .tl-dot{position:absolute; left:0; top:2px; width:23px; height:23px; border-radius:50%; background:var(--panel-2); border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center;}
+  .tl-dot i{width:6px; height:6px; border-radius:50%; background:var(--cyan);}
+  .tl-meta{display:flex; flex-wrap:wrap; align-items:baseline; gap:12px; margin-bottom:5px;}
+  .tl-role{font-family:'Space Grotesk'; font-size:19px; font-weight:600;}
+  .tl-date{font-family:'JetBrains Mono'; font-size:11.5px; color:var(--ink-faint);}
+  .tl-org{color:var(--cyan); font-size:13.5px; font-weight:500; margin-bottom:12px;}
+  .tl-points{color:var(--ink-dim); font-size:14px; line-height:1.7; display:flex; flex-direction:column; gap:7px; margin-bottom:12px;}
+  .tl-points li{list-style:none; padding-left:16px; position:relative;}
+  .tl-points li::before{content:'—'; position:absolute; left:0; color:var(--ink-faint);}
+  .tl-stack{display:flex; flex-wrap:wrap; gap:6px;}
+  .tl-stack span{font-family:'JetBrains Mono'; font-size:10.5px; color:var(--ink-faint); border:1px solid var(--line); padding:4px 9px; border-radius:5px;}
+
+  /* ---------- about ---------- */
+  .about-grid{display:grid; grid-template-columns:.78fr 1.22fr; gap:60px; align-items:start;}
+  @media(max-width:900px){.about-grid{grid-template-columns:1fr; gap:36px;}}
+  .portrait-wrap{position:relative; border-radius:18px; overflow:hidden; aspect-ratio:4/5; border:1px solid var(--line-2); max-width:320px;}
+  .portrait-wrap img{width:100%; height:100%; object-fit:cover; display:block; filter:saturate(.94) contrast(1.02);}
+  .portrait-corner{position:absolute; width:16px; height:16px; border-color:rgba(34,211,199,.55);}
+  .pc-tl{top:12px; left:12px; border-top:1.5px solid; border-left:1.5px solid;}
+  .pc-br{bottom:12px; right:12px; border-bottom:1.5px solid; border-right:1.5px solid;}
+  .portrait-tag{position:absolute; bottom:12px; left:12px; font-family:'JetBrains Mono'; font-size:10px; color:rgba(245,246,248,.85); background:rgba(10,12,16,.5); backdrop-filter:blur(4px); padding:4px 9px; border-radius:5px; letter-spacing:.03em;}
+
+  .about-text p{color:var(--ink-dim); font-size:15.5px; line-height:1.8; margin-bottom:16px;}
+  .about-text p b{color:var(--ink); font-weight:600;}
+
+  /* ---------- stack ---------- */
+  .stack-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+  @media(max-width:900px){.stack-grid{grid-template-columns:repeat(2,1fr);}}
+  .stack-cat{border-radius:14px; padding:22px;}
+  .stack-cat h4{font-family:'JetBrains Mono'; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:14px;}
+  .stack-cat ul{list-style:none; display:flex; flex-direction:column; gap:9px;}
+  .stack-cat li{font-size:13.5px; color:var(--ink); display:flex; align-items:center; gap:9px;}
+  .stack-cat li::before{content:''; width:5px; height:5px; border-radius:50%; background:var(--electric); flex-shrink:0;}
+
+  /* ---------- how i think ---------- */
+  .think-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  @media(max-width:820px){.think-grid{grid-template-columns:1fr;}}
+  .think-card{border-radius:16px; padding:28px;}
+  .think-num{font-family:'JetBrains Mono'; font-size:12px; color:var(--ink-faint); margin-bottom:16px; display:block;}
+  .think-title{font-family:'Space Grotesk'; font-size:18px; font-weight:600; margin-bottom:10px;}
+  .think-desc{color:var(--ink-dim); font-size:13.5px; line-height:1.7;}
+
+  /* ---------- certifications ---------- */
+  .cert-row{display:flex; gap:16px; flex-wrap:wrap;}
+  .cert-card{flex:1; min-width:280px; border-radius:14px; padding:22px; display:flex; gap:15px; align-items:flex-start;}
+  .cert-icon{width:40px; height:40px; border-radius:9px; flex-shrink:0; background:linear-gradient(135deg, var(--electric), var(--violet)); display:flex; align-items:center; justify-content:center;}
+  .cert-name{font-family:'Space Grotesk'; font-weight:600; font-size:14.5px; margin-bottom:4px;}
+  .cert-sub{font-family:'JetBrains Mono'; font-size:11px; color:var(--ink-faint); line-height:1.6;}
+  .cert-note{font-family:'JetBrains Mono'; font-size:12px; color:var(--ink-faint); margin-top:18px;}
+
+  /* ---------- contact ---------- */
+  .contact-panel{border-radius:22px; padding:56px; text-align:center;}
+  @media(max-width:768px){.contact-panel{padding:36px 22px;}}
+  .contact-panel .sec-title{margin:0 auto 14px; max-width:520px;}
+  .contact-panel .sec-desc{margin:0 auto 34px;}
+  .contact-links{display:flex; justify-content:center; gap:14px; flex-wrap:wrap;}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line); padding:40px 0 30px;}
+  .footer-grid{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;}
+  .footer-id{display:flex; flex-direction:column; gap:2px;}
+  .footer-id .logo{margin-bottom:2px;}
+  .footer-role{font-family:'JetBrains Mono'; font-size:11.5px; color:var(--ink-faint);}
+  .footer-links{display:flex; gap:22px;}
+  .footer-links a{color:var(--ink-dim); text-decoration:none; font-size:13px; transition:color .25s;}
+  .footer-links a:hover{color:var(--ink);}
+  .footer-note{font-family:'JetBrains Mono'; font-size:11px; color:var(--ink-faint);}
+
+  .reveal{opacity:0; transform:translateY(26px);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; transition-duration:.001ms !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-lines"></div>
+<div class="bg-glow"></div>
+<div class="grain"></div>
+
+<a href="#main" class="sr-only" style="position:absolute; left:-9999px; top:0; z-index:100; background:#fff; color:#000; padding:10px 16px; border-radius:8px;" onfocus="this.style.left='16px'; this.style.top='16px';" onblur="this.style.left='-9999px';">Skip to content</a>
+
+<!-- ================= NAV ================= -->
+<nav class="nav" id="siteNav" aria-label="Primary">
+  <div class="container nav-inner">
+    <a href="#home" class="logo"><span class="logo-mark">RS</span> Rudra Sharma</a>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#about">About</a>
+      <a href="#stack">Stack</a>
+      <a href="#contact" class="btn btn-ghost" style="padding:9px 20px;">Contact</a>
+    </div>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu" aria-expanded="false"><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-scrim" id="mobileScrim"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#work">Work</a>
+  <a href="#experience">Experience</a>
+  <a href="#about">About</a>
+  <a href="#stack">Stack</a>
+  <a href="#contact" class="btn btn-primary">Contact</a>
+</div>
+
+<main id="main">
+<!-- ================= HERO ================= -->
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div>
+      <div class="status-pill"><span class="status-dot"></span> Open to opportunities · Jaipur, India</div>
+      <h1 class="hero-title">Rudra Sharma</h1>
+      <div class="hero-role">AI &amp; Data Engineer</div>
+      <p class="hero-sub">
+        I build production-oriented AI and data systems — from RAG applications and ML models
+        to scalable data pipelines that run on real, messy data.
+      </p>
+      <div class="hero-ctas">
+        <a href="#work" class="btn btn-primary" id="magneticBtn">
+          View my work
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="assets/Rudra_Sharma_Resume.pdf" class="btn btn-ghost" download>Download resume</a>
+      </div>
+      <div class="hero-social">
+        <a href="https://github.com/RudraSharma3" target="_blank" rel="noopener">GitHub</a>
+        <span class="dot-sep"></span>
+        <a href="https://www.linkedin.com/in/rudra-sharma-3508a227b" target="_blank" rel="noopener">LinkedIn</a>
+        <span class="dot-sep"></span>
+        <a href="mailto:rudrasharma93511@gmail.com">Email</a>
+      </div>
+    </div>
+
+    <div class="visual-card glass" id="visualCard">
+      <div class="visual-label"><span>system.diagram</span><span>ingest → clean → model → serve</span></div>
+      <canvas id="pipelineCanvas" aria-hidden="true"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SELECTED WORK ================= -->
+<section class="sec-pad" id="work">
+  <div class="container">
+    <div class="sec-head">
+      <div class="eyebrow">Selected work</div>
+      <h2 class="sec-title">Systems I've designed and shipped.</h2>
+      <p class="sec-desc">One flagship platform, plus three research and applied-ML projects — all grounded in real, verifiable outcomes.</p>
+    </div>
+
+    <!-- Featured case study: DataPurge Studio -->
+    <div class="feature-case glass reveal">
+      <div class="case-top">
+        <div>
+          <div class="case-title">DataPurge Studio</div>
+          <div class="case-tagline">Asynchronous multi-tenant spreadsheet cleaning platform — architected during my internship at BytePX</div>
+        </div>
+        <div class="case-links">
+          <a href="https://github.com/RudraSharma3/datapurge-studio" target="_blank" rel="noopener" aria-label="DataPurge Studio on GitHub">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5F6F8" stroke-width="1.8"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="case-metrics">
+        <div class="metric"><div class="metric-num">15–20x</div><div class="metric-label">Faster preprocessing</div></div>
+        <div class="metric"><div class="metric-num">99.9%</div><div class="metric-label">Processing accuracy</div></div>
+        <div class="metric"><div class="metric-num">94%</div><div class="metric-label">Fewer manual data errors</div></div>
+        <div class="metric"><div class="metric-num">4.5h → 12m</div><div class="metric-label">Avg. prep time reduced</div></div>
+      </div>
+
+      <div class="case-body">
+        <div class="case-block">
+          <h4>Problem</h4>
+          <p>Enterprise teams were cleaning complex, multi-sheet Excel workbooks by hand or with one-off Pandas scripts — slow, unrepeatable, and prone to silently breaking cell formatting, formulas, and layout.</p>
+          <h4 style="margin-top:22px;">What I built</h4>
+          <p>An asynchronous, multi-tenant web platform where users upload workbooks, get automatic schema/anomaly detection, configure non-destructive cleaning rules, review flagged records inline, and export sanitized files with full formatting preserved.</p>
+        </div>
+        <div class="case-block">
+          <h4>Technical approach</h4>
+          <p>FastAPI backend streaming uploads through <code>io.BytesIO</code> buffers on Starlette thread pools; dynamic type downcasting and an O(N) lookahead sniffer for fast schema inference; RapidFuzz (C++ layer) for fuzzy record matching; OpenPyXL coordinate-mapping to preserve cell styles and formulas through the clean cycle; PostgreSQL + SQLAlchemy for auth, sessions, and audit logs.</p>
+          <h4 style="margin-top:22px;">Result</h4>
+          <p>Processes complex multi-sheet workbooks in under two minutes with 99.9% accuracy — a 15–20x speedup over ad-hoc scripting, with zero formatting loss and a full audit trail of every removed record.</p>
+        </div>
+      </div>
+
+      <div class="case-stack">
+        <span>FastAPI</span><span>Pandas</span><span>OpenPyXL</span><span>RapidFuzz</span><span>PostgreSQL</span><span>SQLAlchemy</span><span>React</span><span>JWT Auth</span><span>Docker</span>
+      </div>
+
+      <div class="case-diagram">
+        <h4>Architecture</h4>
+        <svg viewBox="0 0 760 120" width="100%" height="120" role="img" aria-label="React frontend to FastAPI backend to data cleaning engine to storage and export">
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0L10 5L0 10z" fill="#5B6272"/>
+            </marker>
+          </defs>
+          <g font-family="JetBrains Mono, monospace" font-size="11" fill="#9AA3B2">
+            <rect x="10" y="35" width="150" height="50" rx="10" fill="none" stroke="#4C6FFF" stroke-opacity="0.5"/>
+            <text x="85" y="56" text-anchor="middle" fill="#F5F6F8">React SPA</text>
+            <text x="85" y="72" text-anchor="middle" font-size="9.5">Wizard · Grid Editor</text>
+
+            <line x1="160" y1="60" x2="205" y2="60" stroke="#5B6272" marker-end="url(#arrow)"/>
+
+            <rect x="210" y="35" width="150" height="50" rx="10" fill="none" stroke="#8B5CF6" stroke-opacity="0.5"/>
+            <text x="285" y="56" text-anchor="middle" fill="#F5F6F8">FastAPI</text>
+            <text x="285" y="72" text-anchor="middle" font-size="9.5">Auth · Async Tasks</text>
+
+            <line x1="360" y1="60" x2="405" y2="60" stroke="#5B6272" marker-end="url(#arrow)"/>
+
+            <rect x="410" y="35" width="170" height="50" rx="10" fill="none" stroke="#22D3C7" stroke-opacity="0.5"/>
+            <text x="495" y="53" text-anchor="middle" fill="#F5F6F8">Cleaning Engine</text>
+            <text x="495" y="69" text-anchor="middle" font-size="9.5">Pandas · OpenPyXL · RapidFuzz</text>
+
+            <line x1="580" y1="60" x2="625" y2="60" stroke="#5B6272" marker-end="url(#arrow)"/>
+
+            <rect x="630" y="35" width="120" height="50" rx="10" fill="none" stroke="#4C6FFF" stroke-opacity="0.5"/>
+            <text x="690" y="56" text-anchor="middle" fill="#F5F6F8">Storage</text>
+            <text x="690" y="72" text-anchor="middle" font-size="9.5">PostgreSQL</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Other projects -->
+    <div class="proj-grid" id="projGrid"></div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section class="sec-pad" id="experience" style="background:linear-gradient(180deg, transparent, rgba(255,255,255,.015), transparent);">
+  <div class="container">
+    <div class="sec-head">
+      <div class="eyebrow">Experience</div>
+      <h2 class="sec-title">Three internships. One throughline.</h2>
+      <p class="sec-desc">Taking messy, high-volume real-world data and turning it into systems people rely on.</p>
+    </div>
+    <div class="tl" id="timeline"></div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="sec-pad" id="about">
+  <div class="container about-grid">
+    <div>
+      <div class="portrait-wrap reveal">
+        <img src="assets/portrait.jpg" alt="Portrait of Rudra Sharma" loading="lazy" />
+        <div class="portrait-corner pc-tl"></div>
+        <div class="portrait-corner pc-br"></div>
+        <div class="portrait-tag">RS · Jaipur, IN</div>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="eyebrow">About</div>
+      <h2 class="sec-title" style="margin-bottom:22px;">A few things worth knowing.</h2>
+      <p>I'm a Computer Science (AI &amp; ML) undergraduate at UPES, graduating in 2026. Most of my time right now goes into a Data Engineering internship at <b>BytePX</b>, where I design asynchronous data platforms that process enterprise-scale spreadsheets reliably and quickly.</p>
+      <p>Before that, I built a bilingual RAG chatbot for <b>UltraTech Cement's Birla White</b> division, and worked on generative AI prototypes — VAEs, GANs, and LLM-based chatbots — during an internship at <b>SmartBridge</b>.</p>
+      <p>I'm most interested in the unglamorous middle of AI systems: retrieval that stays grounded instead of hallucinating, pipelines that survive contact with real-world data, and models that can be explained rather than just trusted blindly. That's where I spend most of my energy, and where I want to keep building.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TECHNICAL STACK ================= -->
+<section class="sec-pad" id="stack" style="background:linear-gradient(180deg, transparent, rgba(255,255,255,.015), transparent);">
+  <div class="container">
+    <div class="sec-head">
+      <div class="eyebrow">Technical stack</div>
+      <h2 class="sec-title">What I actually build with.</h2>
+    </div>
+    <div class="stack-grid" id="stackGrid"></div>
+  </div>
+</section>
+
+<!-- ================= HOW I THINK ================= -->
+<section class="sec-pad">
+  <div class="container">
+    <div class="sec-head">
+      <div class="eyebrow">How I think</div>
+      <h2 class="sec-title">A few principles I keep coming back to.</h2>
+    </div>
+    <div class="think-grid" id="thinkGrid"></div>
+  </div>
+</section>
+
+<!-- ================= CERTIFICATIONS ================= -->
+<section class="sec-pad" style="background:linear-gradient(180deg, transparent, rgba(255,255,255,.015), transparent);">
+  <div class="container">
+    <div class="sec-head">
+      <div class="eyebrow">Certifications</div>
+      <h2 class="sec-title">Verified credentials.</h2>
+    </div>
+    <div class="cert-row" id="certRow"></div>
+    <div class="cert-note">Also: 25+ Google Cloud Skill Badges, and Java Gold Badge on HackerRank.</div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="sec-pad" id="contact">
+  <div class="container">
+    <div class="contact-panel glass">
+      <div class="eyebrow" style="justify-content:center;">Contact</div>
+      <h2 class="sec-title">Let's build something useful.</h2>
+      <p class="sec-desc">Open to internships, collaborations, and interesting problems in AI and data engineering. The fastest way to reach me is email.</p>
+      <div class="contact-links">
+        <a href="mailto:rudrasharma93511@gmail.com" class="btn btn-primary">Email me</a>
+        <a href="https://www.linkedin.com/in/rudra-sharma-3508a227b" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
+        <a href="https://github.com/RudraSharma3" target="_blank" rel="noopener" class="btn btn-ghost">GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container footer-grid">
+    <div class="footer-id">
+      <div class="logo"><span class="logo-mark">RS</span> Rudra Sharma</div>
+      <div class="footer-role">AI &amp; Data Engineer</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/RudraSharma3" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/rudra-sharma-3508a227b" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:rudrasharma93511@gmail.com">Email</a>
+    </div>
+    <div class="footer-note">© 2026 Rudra Sharma</div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   CONTENT SOURCE — edit here, markup stays untouched.
+========================================================= */
+const CONTENT = {
+  projects: [
+    {
+      tag:"RAG Platform",
+      title:"VoxContextEngine",
+      desc:"Document-grounded Retrieval-Augmented Generation engine enforcing context-locked, hallucination-resistant LLM responses.",
+      detail:"Hybrid search architecture combining dense vector search via Qdrant (all-MiniLM-L6-v2 embeddings, HNSW indexing) with sparse keyword retrieval via Rank-BM25. Built an automated Python evaluation suite to benchmark ingestion and precision metrics.",
+      stack:["FastAPI","Docker","Qdrant","Rank-BM25","all-MiniLM-L6-v2"],
+      result:"100% safety-run completeness in hallucination validation tests",
+      link:"https://github.com/RudraSharma3/vox-context-engine"
+    },
+    {
+      tag:"Applied ML",
+      title:"Estimated Delivery Date Prediction",
+      desc:"XGBoost model predicting e-commerce delivery windows from historical shipment data.",
+      detail:"Trained and optimized across 500K+ historical e-commerce shipment records. Advanced feature engineering and data-scaling pipelines to capture supply-chain constraints and minimize ETA prediction variance.",
+      stack:["XGBoost","Feature Engineering","Pandas"],
+      result:"Trained on 500K+ shipment records",
+      link:"https://github.com/RudraSharma3/Estimated_Delivery_Date"
+    },
+    {
+      tag:"Healthcare ML · Research",
+      title:"Pneumonia Detection & Genomic Analysis",
+      desc:"Co-authored research on a hybrid deep learning architecture for non-invasive clinical diagnostics.",
+      detail:"CNNs trained on chest X-ray datasets for automated pneumonia identification, paired with logistic regression modeling over genomic sequence data to predict multi-factor polygenic disorder risk.",
+      stack:["CNN","Logistic Regression","Research Paper"],
+      result:"94% accuracy on automated pneumonia identification",
+      link:"https://github.com/RudraSharma3"
+    }
+  ],
+
+  experience: [
+    {
+      role:"Data Engineering Intern", org:"BytePX", date:"March 2026 — Present", current:true,
+      points:[
+        "Architected DataPurge Studio, an asynchronous multi-tenant data engine (FastAPI + PostgreSQL) processing multi-sheet workbooks in under 2 minutes at 99.9% accuracy — a 15–20x speedup.",
+        "Streamed data through io.BytesIO buffers on Starlette thread pools; built an O(N) lookahead sniffer with rapidfuzz for 10x faster fuzzy matching.",
+        "Built Databricks & Apache Spark pipelines, including a resume converter that cut multi-format document processing time by 90%.",
+        "Trained a SHAP-explainable Random Forest pipeline that reduced a client's marketing overhead by 50%, deployed via IBM watsonx; mentored 2 junior engineers."
+      ],
+      stack:["FastAPI","PostgreSQL","Apache Spark","Databricks","rapidfuzz","IBM watsonx"]
+    },
+    {
+      role:"AI & ML Intern", org:"UltraTech Cement Ltd. — Birla White", date:"June 2025 — July 2025", current:false,
+      points:[
+        "Engineered \"Birbal 2.0,\" a bilingual (Hindi–English) RAG chatbot on FastAPI to automate querying across domain-specific technical documentation.",
+        "Cut employee query latency by 95% by replacing blockable SQL/API retrieval with asynchronous NLP pipelines and intent classification.",
+        "Added contextual state tracking, lifting query workflow efficiency by 60% across regional technical teams."
+      ],
+      stack:["FastAPI","RAG","NLP"]
+    },
+    {
+      role:"Generative AI Intern", org:"SmartBridge", date:"June 2025 — July 2025", current:false,
+      points:[
+        "Built and deployed generative AI architectures on FastAPI and Google Gemini APIs, experimenting with VAEs, GANs, BERT, and LSTMs.",
+        "Shipped multilingual chatbot and predictive-model prototypes alongside 60+ hours of advanced training."
+      ],
+      stack:["FastAPI","Gemini API","VAEs / GANs"]
+    }
+  ],
+
+  stack: [
+    {cat:"Programming", items:["Python","Java","SQL","JavaScript"]},
+    {cat:"AI / ML", items:["Scikit-learn","PyTorch","TensorFlow","XGBoost","NLP · LLMs","RAG · LangChain"]},
+    {cat:"Data Engineering", items:["Apache Spark","Databricks","Pandas","ETL Pipelines"]},
+    {cat:"Backend", items:["FastAPI","Flask","REST APIs","PostgreSQL"]}
+  ],
+
+  thinking: [
+    {t:"Measure before optimizing", d:"The 15–20x speedup on DataPurge Studio came from profiling first, not guessing — every performance claim I make is backed by a benchmark."},
+    {t:"Design for real data, not clean data", d:"Production data has schema drift, mixed types, and fuzzy duplicates. I design pipelines around that reality instead of assuming clean input."},
+    {t:"Prefer explainable over impressive", d:"From SHAP-integrated models to hallucination-tested RAG, I favor systems that can be audited over ones that just look sophisticated."}
+  ],
+
+  certs: [
+    {name:"Microsoft Certified: Azure AI Engineer Associate", sub:"Credential ID 957CF25F904A0B46 · Earned May 2026 · Verified online"}
+  ]
+};
+
+function el(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!==undefined) e.innerHTML=html; return e; }
+
+// Projects
+const projGrid = document.getElementById('projGrid');
+CONTENT.projects.forEach(p=>{
+  const card = el('div','proj-card glass reveal');
+  card.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
+      <span class="proj-tag">${p.tag}</span>
+      <a href="${p.link}" target="_blank" rel="noopener" class="proj-gh" aria-label="${p.title} on GitHub" style="flex-shrink:0; width:30px; height:30px; border-radius:8px; border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center; transition:border-color .25s, background .25s;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F5F6F8" stroke-width="1.8"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+      </a>
+    </div>
+    <div class="proj-title">${p.title}</div>
+    <div class="proj-desc">${p.desc}</div>
+    <div class="proj-toggle"><span>+</span> Technical details</div>
+    <div class="proj-more">
+      <div class="proj-more-inner">
+        <p>${p.detail}</p>
+        <div class="proj-stack">${p.stack.map(s=>`<span>${s}</span>`).join('')}</div>
+        <div class="proj-result">▲ ${p.result}</div>
+      </div>
+    </div>`;
+  card.querySelector('.proj-gh').addEventListener('click', e=> e.stopPropagation());
+  card.addEventListener('click', ()=> card.classList.toggle('open'));
+  projGrid.appendChild(card);
+});
+
+// Experience
+const timeline = document.getElementById('timeline');
+CONTENT.experience.forEach(x=>{
+  const item = el('div','tl-item reveal'+(x.current?' current':''));
+  item.innerHTML = `
+    <div class="tl-dot"><i></i></div>
+    <div class="tl-meta"><div class="tl-role">${x.role}</div><div class="tl-date">${x.date}</div></div>
+    <div class="tl-org">${x.org}</div>
+    <ul class="tl-points">${x.points.map(p=>`<li>${p}</li>`).join('')}</ul>
+    <div class="tl-stack">${x.stack.map(s=>`<span>${s}</span>`).join('')}</div>`;
+  timeline.appendChild(item);
+});
+
+// Stack
+const stackGrid = document.getElementById('stackGrid');
+CONTENT.stack.forEach(s=>{
+  const card = el('div','stack-cat glass reveal');
+  card.innerHTML = `<h4>${s.cat}</h4><ul>${s.items.map(i=>`<li>${i}</li>`).join('')}</ul>`;
+  stackGrid.appendChild(card);
+});
+
+// How I think
+const thinkGrid = document.getElementById('thinkGrid');
+CONTENT.thinking.forEach((t,i)=>{
+  const card = el('div','think-card glass reveal');
+  card.innerHTML = `<span class="think-num">0${i+1}</span><div class="think-title">${t.t}</div><div class="think-desc">${t.d}</div>`;
+  thinkGrid.appendChild(card);
+});
+
+// Certs
+const certRow = document.getElementById('certRow');
+CONTENT.certs.forEach(c=>{
+  const card = el('div','cert-card glass reveal');
+  card.innerHTML = `
+    <div class="cert-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2l2.9 6.3 6.9.7-5.2 4.7 1.5 6.8L12 17l-6.1 3.5 1.5-6.8-5.2-4.7 6.9-.7z"/></svg></div>
+    <div><div class="cert-name">${c.name}</div><div class="cert-sub">${c.sub}</div></div>`;
+  certRow.appendChild(card);
+});
+
+/* =========================================================
+   INTERACTIONS
+========================================================= */
+const nav = document.getElementById('siteNav');
+window.addEventListener('scroll', ()=> nav.classList.toggle('scrolled', window.scrollY > 40));
+
+// mobile menu
+const mobileToggle = document.getElementById('mobileToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileScrim = document.getElementById('mobileScrim');
+function closeMobileMenu(){
+  mobileToggle.classList.remove('open'); mobileToggle.setAttribute('aria-expanded','false');
+  mobileMenu.classList.remove('open'); mobileScrim.classList.remove('open');
+}
+mobileToggle.addEventListener('click', ()=>{
+  const isOpen = mobileMenu.classList.toggle('open');
+  mobileScrim.classList.toggle('open', isOpen);
+  mobileToggle.classList.toggle('open', isOpen);
+  mobileToggle.setAttribute('aria-expanded', String(isOpen));
+});
+mobileScrim.addEventListener('click', closeMobileMenu);
+mobileMenu.querySelectorAll('a').forEach(a=> a.addEventListener('click', closeMobileMenu));
+
+// magnetic primary button (single, tasteful use)
+const magBtn = document.getElementById('magneticBtn');
+magBtn.addEventListener('mousemove', e=>{
+  const r = magBtn.getBoundingClientRect();
+  const x = e.clientX - r.left - r.width/2;
+  const y = e.clientY - r.top - r.height/2;
+  gsap.to(magBtn, {x:x*0.2, y:y*0.3, duration:.4, ease:'power3.out'});
+});
+magBtn.addEventListener('mouseleave', ()=> gsap.to(magBtn,{x:0,y:0,duration:.5,ease:'elastic.out(1,0.5)'}));
+
+// subtle mouse-responsive tilt on hero visual
+const visualCard = document.getElementById('visualCard');
+if(window.matchMedia('(min-width:1024px)').matches){
+  visualCard.addEventListener('mousemove', e=>{
+    const r = visualCard.getBoundingClientRect();
+    const px = (e.clientX - r.left)/r.width - 0.5;
+    const py = (e.clientY - r.top)/r.height - 0.5;
+    gsap.to(visualCard, {rotateY: px*4, rotateX: -py*4, duration:.6, ease:'power2.out', transformPerspective:800});
+  });
+  visualCard.addEventListener('mouseleave', ()=> gsap.to(visualCard,{rotateX:0, rotateY:0, duration:.7, ease:'power2.out'}));
+}
+
+/* GSAP reveals */
+gsap.registerPlugin(ScrollTrigger);
+gsap.utils.toArray('.reveal').forEach(elx=>{
+  gsap.fromTo(elx, {opacity:0, y:26}, {opacity:1, y:0, duration:.85, ease:'power3.out', scrollTrigger:{trigger:elx, start:'top 90%'}});
+});
+gsap.fromTo('.hero-title, .hero-role, .hero-sub, .hero-ctas, .hero-social', {opacity:0, y:20}, {opacity:1, y:0, duration:.9, stagger:.1, ease:'power3.out', delay:.1});
+gsap.fromTo('.visual-card', {opacity:0, x:24}, {opacity:1, x:0, duration:1, ease:'power3.out', delay:.25});
+
+/* =========================================================
+   Hero canvas: minimal pipeline diagram (no fabricated metrics)
+========================================================= */
+const canvas = document.getElementById('pipelineCanvas');
+const ctx = canvas.getContext('2d');
+let W, H, DPR;
+const stages = ['INGEST','CLEAN','TRANSFORM','MODEL','SERVE'];
+let nodes = [];
+
+function resizeCanvas(){
+  DPR = Math.min(window.devicePixelRatio||1, 2);
+  const rect = canvas.getBoundingClientRect();
+  W = rect.width; H = rect.height;
+  canvas.width = W*DPR; canvas.height = H*DPR;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  nodes = stages.map((s,i)=>({label:s, x:(W/(stages.length-1))*i, y:H/2 + Math.sin(i*1.3)*16}));
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+let particles = [];
+for(let i=0;i<10;i++){ particles.push({t:Math.random(), speed:0.0026+Math.random()*0.002, laneOffset:(Math.random()-0.5)*18, hue:Math.random()>0.5?'#4C6FFF':'#22D3C7'}); }
+
+function pathPoint(t){
+  const segCount = nodes.length-1;
+  const segF = t*segCount;
+  const idx = Math.min(Math.floor(segF), segCount-1);
+  const localT = segF-idx;
+  const a = nodes[idx], b = nodes[idx+1];
+  return { x: a.x + (b.x-a.x)*localT, y: a.y + (b.y-a.y)*localT };
+}
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function drawFrame(){
+  ctx.clearRect(0,0,W,H);
+  ctx.beginPath();
+  nodes.forEach((n,i)=> i===0 ? ctx.moveTo(n.x,n.y) : ctx.lineTo(n.x,n.y));
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  if(!reduceMotion){
+    particles.forEach(p=>{
+      p.t += p.speed;
+      if(p.t>1){ p.t=0; p.laneOffset=(Math.random()-0.5)*18; p.hue = Math.random()>0.5?'#4C6FFF':'#22D3C7'; }
+      const pt = pathPoint(p.t);
+      const glow = 0.35 + 0.6*Math.sin(p.t*Math.PI);
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y + p.laneOffset*(1-Math.abs(p.t-0.5)*1.4), 2.4, 0, Math.PI*2);
+      ctx.fillStyle = p.hue;
+      ctx.globalAlpha = glow;
+      ctx.shadowColor = p.hue; ctx.shadowBlur = 9;
+      ctx.fill();
+      ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+    });
+  }
+
+  nodes.forEach((n,i)=>{
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, 14, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(255,255,255,0.03)';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, 4.5, 0, Math.PI*2);
+    ctx.fillStyle = i===stages.length-1 ? '#22D3C7' : '#EDEFF3';
+    ctx.fill();
+    ctx.font = '10px JetBrains Mono, monospace';
+    ctx.fillStyle = 'rgba(154,163,178,0.9)';
+    ctx.textAlign = 'center';
+    ctx.fillText(n.label, n.x, n.y + 28);
+  });
+
+  requestAnimationFrame(drawFrame);
+}
+drawFrame();
+</script>
+</body>
+</html>
