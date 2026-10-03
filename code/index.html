@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rudra Sharma — AI/ML & Data Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{--bg:#05060a;--bg2:#0a0d14;--card:rgba(255,255,255,.04);--line:rgba(255,255,255,.09);--ink:#f3f5f9;--dim:#9aa4b5;--a:#6c8cff;--b:#9b7bff;--c:#35e0c2;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f7f8fb;--bg2:#eef0f6;--card:rgba(10,20,50,.04);--line:rgba(10,20,50,.12);--ink:#0b1020;--dim:#4d586b;--a:#3354e8;--b:#6a47e6;--c:#0a9c85}}
+:root[data-theme="dark"]{--bg:#05060a}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
+body{background:var(--bg);color:var(--ink);font:16px/1.65 Inter,system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.w{max-width:1100px;margin:0 auto;padding:0 24px}
+.mono{font-family:'JetBrains Mono',monospace}
+nav{position:fixed;top:0;left:0;right:0;z-index:20;padding-top:env(safe-area-inset-top,0px);backdrop-filter:blur(16px);background:color-mix(in srgb,var(--bg) 70%,transparent);border-bottom:1px solid var(--line)}
+nav .w{display:flex;justify-content:space-between;align-items:center;height:60px}
+.logo{font:600 17px 'Space Grotesk';letter-spacing:-.01em}.logo b{color:var(--c)}
+.nl{display:flex;gap:26px;font-size:14px;color:var(--dim)}.nl a:hover{color:var(--ink)}
+@media(max-width:700px){.nl a:not(.cta){display:none}}
+.cta{color:var(--ink);border:1px solid var(--line);padding:6px 16px;border-radius:99px}
+/* hero */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+#gl{position:absolute;inset:0;width:100%;height:100%}
+.hero:after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,transparent 20%,var(--bg) 85%);pointer-events:none}
+.hc{position:relative;z-index:2;padding-top:90px}
+.eye{font:500 12px 'JetBrains Mono';letter-spacing:.16em;text-transform:uppercase;color:var(--c)}
+h1{font:700 clamp(44px,8.5vw,104px)/.98 'Space Grotesk';letter-spacing:-.045em;margin:18px 0 22px;max-width:900px}
+h1 span{background:linear-gradient(100deg,var(--a),var(--b) 50%,var(--c));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{max-width:560px;color:var(--dim);font-size:18px}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.btn{padding:13px 24px;border-radius:99px;font-weight:600;font-size:15px;border:1px solid var(--line);transition:.3s}
+.btn.p{background:linear-gradient(120deg,var(--a),var(--b));border:0;color:#fff;box-shadow:0 10px 36px -12px var(--a)}
+.btn:hover{transform:translateY(-2px)}
+.proof{display:flex;flex-wrap:wrap;gap:36px;margin-top:56px;padding-top:26px;border-top:1px solid var(--line)}
+.proof b{display:block;font:700 30px 'Space Grotesk';letter-spacing:-.02em}.proof small{color:var(--dim);font-size:12px}
+section.s{padding:120px 0;position:relative}
+h2{font:700 clamp(30px,4.6vw,52px)/1.05 'Space Grotesk';letter-spacing:-.035em;margin:12px 0 16px;max-width:760px}
+.sub{color:var(--dim);max-width:600px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;backdrop-filter:blur(8px)}
+/* demo */
+.demo{margin-top:40px;display:grid;grid-template-columns:1fr 1.15fr;gap:0;overflow:hidden}
+@media(max-width:860px){.demo{grid-template-columns:1fr}}
+.dl{padding:26px;border-right:1px solid var(--line)}
+@media(max-width:860px){.dl{border-right:0;border-bottom:1px solid var(--line)}}
+.qs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.q{font:inherit;font-size:13px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:99px;padding:7px 14px;cursor:pointer;transition:.2s}
+.q:hover{border-color:var(--a)}
+.in{display:flex;gap:8px;margin-top:6px}
+.in input{flex:1;min-width:0;background:var(--bg2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 14px;font:inherit;font-size:14px}
+.in button{background:var(--a);color:#fff;border:0;border-radius:12px;padding:0 18px;font:600 14px Inter;cursor:pointer}
+.note{font:12px 'JetBrains Mono';color:var(--dim);margin-top:14px;line-height:1.6}
+.dr{padding:26px;min-height:360px}
+.lbl{font:500 11px 'JetBrains Mono';letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.chunk{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:9px;font-size:13px;position:relative;overflow:hidden;animation:up .5s both}
+.chunk i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,color-mix(in srgb,var(--c) 22%,transparent),transparent);z-index:0}
+.chunk>*{position:relative}
+.chunk .m{font:11px 'JetBrains Mono';color:var(--c);display:flex;justify-content:space-between;margin-bottom:3px}
+.ans{margin-top:16px;border-left:2px solid var(--c);padding:4px 0 4px 14px;font-size:14.5px}
+.ans.no{border-color:#ff7b72}
+@keyframes up{from{opacity:0;transform:translateY(10px)}}
+/* work */
+.cs{margin-top:30px;padding:36px;display:grid;grid-template-columns:1.1fr 1fr;gap:34px}
+@media(max-width:860px){.cs{grid-template-columns:1fr;padding:24px}}
+.cs h3{font:700 28px 'Space Grotesk';letter-spacing:-.02em}
+.cs p{color:var(--dim);font-size:15px;margin-top:10px}
+.tg{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}.tg span{font:11px 'JetBrains Mono';border:1px solid var(--line);color:var(--dim);padding:3px 10px;border-radius:99px}
+.big{font:700 54px/1 'Space Grotesk';letter-spacing:-.04em;background:linear-gradient(120deg,var(--a),var(--c));-webkit-background-clip:text;background-clip:text;color:transparent}
+.met{display:grid;gap:18px;align-content:center}.met div small{display:block;color:var(--dim);font-size:13px;margin-top:2px}
+.lk{display:inline-block;margin-top:18px;color:var(--c);font-weight:600;font-size:14px}
+/* exp */
+.tl{margin-top:36px;display:grid;gap:14px}
+.ex{padding:26px 28px;display:grid;grid-template-columns:200px 1fr;gap:20px}
+@media(max-width:760px){.ex{grid-template-columns:1fr;gap:8px}}
+.ex .d{font:12px 'JetBrains Mono';color:var(--dim)}.ex h4{font:600 19px 'Space Grotesk'}.ex h4 span{color:var(--c);font-weight:500}
+.ex ul{margin:10px 0 0 18px;color:var(--dim);font-size:14.5px}.ex li{margin:4px 0}
+.sk{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px}
+@media(max-width:860px){.sk{grid-template-columns:repeat(2,1fr)}}
+.sk div{padding:20px}.sk h5{font:500 11px 'JetBrains Mono';letter-spacing:.1em;text-transform:uppercase;color:var(--c);margin-bottom:10px}.sk p{font-size:14px;color:var(--dim)}
+.end{text-align:center}.end h2{margin:12px auto 16px}.end .sub{margin:0 auto}.end .btns{justify-content:center}
+footer{border-top:1px solid var(--line);padding:28px 0;text-align:center;color:var(--dim);font-size:13px}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s}.rv.on{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+
+body{font-size:15px}
+h1{font-size:clamp(30px,4.4vw,56px);line-height:1.06;letter-spacing:-.035em;max-width:760px}
+h2{font-size:clamp(22px,2.8vw,32px);letter-spacing:-.025em}
+.lead{font-size:16px}.proof b{font-size:24px}.big{font-size:36px}.cs h3{font-size:21px}
+section.s{padding:84px 0}.hero{min-height:92vh}
+.logo{display:flex;align-items:center;gap:10px;font-size:16px}.lm{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--a),var(--b));display:flex;align-items:center;justify-content:center;font:600 12px 'JetBrains Mono';color:#fff}
+.nl{gap:20px;font-size:13px}@media(max-width:980px){.nl a:not(.cta){display:none}}
+.ab{display:grid;grid-template-columns:260px 1fr;gap:44px;align-items:start}@media(max-width:760px){.ab{grid-template-columns:1fr}.ph{max-width:240px}}
+.ph img{width:100%;border-radius:18px;border:1px solid var(--line);display:block}
+.facts{display:grid;gap:10px;margin-top:20px}.facts div{border-top:1px solid var(--line);padding-top:10px;font-size:14px}.facts small,.cg4 small{display:block;font:11px 'JetBrains Mono';letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
+.ex{grid-template-columns:170px 1fr}.ex h4{font-size:17px}
+.cs2{margin-top:28px;padding:34px}@media(max-width:760px){.cs2{padding:22px}}
+.ctop{display:flex;justify-content:space-between;gap:16px}.ctop h3{font:700 24px 'Space Grotesk';letter-spacing:-.02em}
+.gh{width:38px;height:38px;border:1px solid var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.25s}.gh:hover{border-color:var(--c);color:var(--c)}
+.mt{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0}@media(max-width:700px){.mt{grid-template-columns:repeat(2,1fr)}}
+.mt div{border-top:1px solid var(--line);padding-top:12px}.mt b{font:700 22px 'Space Grotesk'}.mt small{display:block;font:10.5px 'JetBrains Mono';letter-spacing:.05em;text-transform:uppercase;color:var(--dim)}
+.c2{display:grid;grid-template-columns:1fr 1fr;gap:30px}@media(max-width:800px){.c2{grid-template-columns:1fr}}
+h6{font:500 11px 'JetBrains Mono';letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:14px 0 6px}.c2 p{font-size:14px;color:var(--dim)}
+.arch{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:26px;padding-top:22px;border-top:1px solid var(--line);color:var(--dim)}
+.arch span{border:1px solid var(--line);border-radius:10px;padding:8px 14px;font:500 12px 'JetBrains Mono';color:var(--ink);text-align:center}.arch span.hl{border-color:var(--c)}.arch small{display:block;font-size:10px;color:var(--dim);margin-top:2px}
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}@media(max-width:900px){.pg{grid-template-columns:1fr}}
+.pc{padding:24px;display:flex;flex-direction:column;transition:.3s;color:inherit}a.pc:hover{transform:translateY(-3px);border-color:var(--a)}
+.pc h4{font:600 18px 'Space Grotesk';margin:8px 0}.pc p{font-size:13.5px;color:var(--dim);flex:1}.pc .r{font:12px 'JetBrains Mono';color:var(--c);margin-top:12px}.pc .go{font:600 13px Inter;color:var(--a);margin-top:14px}.pc .eye{font-size:10.5px}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}@media(max-width:900px){.sg{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.sg{grid-template-columns:1fr}}
+.sg .card{padding:22px}.sg h5{font:500 11px 'JetBrains Mono';letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:14px}.sg ul{list-style:none;display:grid;gap:8px}.sg li{display:flex;align-items:center;gap:10px;font-size:14px}.sg li:before{content:'';width:5px;height:5px;border-radius:50%;background:var(--a)}
+.msft{margin-top:24px;padding:26px;display:flex;gap:18px;align-items:center;border-color:color-mix(in srgb,var(--c) 45%,var(--line));background:linear-gradient(120deg,color-mix(in srgb,var(--a) 14%,transparent),transparent)}
+.msft h3{font:600 20px 'Space Grotesk';margin:4px 0}.mi{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--a),var(--b));display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;flex-shrink:0}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:14px}.cg .card{padding:18px}.cg h4{font:600 15px 'Space Grotesk'}.cg p{font-size:13px;color:var(--dim)}
+.cg4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px;text-align:left}@media(max-width:900px){.cg4{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.cg4{grid-template-columns:1fr}}
+.cg4 .card{padding:18px;font-size:14px;transition:.3s;word-break:break-word}.cg4 .card:hover{border-color:var(--c)}
+
+.hc{width:100%}
+.mt{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.lbl2{font:500 12px 'JetBrains Mono';letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin:34px 0 0}
+.gh.off{opacity:.45;cursor:not-allowed}.gl{display:flex;align-items:center;gap:10px}.gl small{font:11px 'JetBrains Mono';color:var(--dim)}
+.pc{cursor:pointer;text-align:left}.pc:focus-visible{outline:2px solid var(--c);outline-offset:3px}.pc:hover{transform:translateY(-3px);border-color:var(--a)}
+.arch i{font-style:normal;color:var(--dim)}
+
+html{scroll-padding-top:calc(88px + env(safe-area-inset-top,0px))}
+nav{top:calc(12px + env(safe-area-inset-top,0px));padding-top:0;background:none;border:0;backdrop-filter:none;pointer-events:none}
+.np{pointer-events:auto;max-width:860px;width:calc(100% - 24px);margin:0 auto;display:flex;align-items:center;gap:14px;padding:7px 7px 7px 14px;border-radius:99px;background:color-mix(in srgb,var(--bg) 58%,transparent);backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);border:1px solid var(--line);box-shadow:0 12px 40px -14px rgba(0,0,0,.65)}
+.nv{flex:1;display:flex;justify-content:center;gap:2px}
+.nv a{font-size:13px;color:var(--dim);padding:7px 13px;border-radius:99px;transition:.25s}.nv a:hover{color:var(--ink);background:var(--card)}.nv a.on{color:var(--ink);background:color-mix(in srgb,var(--a) 22%,transparent)}
+.nc{font:600 13px Inter;color:#fff;background:linear-gradient(120deg,var(--a),var(--b));padding:9px 18px;border-radius:99px;box-shadow:0 6px 20px -8px var(--a);transition:.25s}.nc:hover{transform:translateY(-1px)}
+.mb{display:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;align-items:center;justify-content:center;color:var(--ink)}
+.mb span,.mb span:before,.mb span:after{display:block;width:14px;height:1.5px;background:currentColor;position:relative;transition:.3s}.mb span:before,.mb span:after{content:'';position:absolute;left:0}.mb span:before{top:-5px}.mb span:after{top:5px}
+.mb.open span{background:transparent}.mb.open span:before{transform:translateY(5px) rotate(45deg)}.mb.open span:after{transform:translateY(-5px) rotate(-45deg)}
+.mm{display:none;pointer-events:auto;width:calc(100% - 24px);max-width:860px;margin:8px auto 0;padding:10px;border-radius:22px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(20px);border:1px solid var(--line)}
+.mm.open{display:grid}.mm a{padding:13px 14px;border-radius:12px;font-size:15px}.mm a:active{background:var(--card)}
+.logo .ln{font-size:15px}
+@media(max-width:860px){.nv,.nc{display:none}.mb{display:flex;margin-left:auto}}
+@media(max-width:1099px){
+.hero{display:block;min-height:0;padding-top:0}
+#gl{position:relative;height:300px;margin-top:64px}
+.hero:after{display:none}
+.hc{padding-top:6px;padding-bottom:40px}
+.proof{gap:22px 30px;margin-top:36px}
+.btn{padding:11px 18px;font-size:14px}
+}
+</style>
+</head>
+<body>
+<nav><div class="np"><a class="logo" href="#top"><span class="lm">RS</span><span class="ln">Rudra Sharma</span></a><div class="nv" id="nv"><a href="#about">About</a><a href="#exp">Experience</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#certs">Certifications</a></div><a class="nc" href="#contact">Contact</a><button class="mb" id="mb" aria-label="Open menu" aria-expanded="false"><span></span></button></div><div class="mm" id="mm"><a href="#about">About</a><a href="#exp">Experience</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#certs">Certifications</a><a href="#contact">Contact</a></div></nav>
+<header class="hero" id="top"><canvas id="gl"></canvas>
+<div class="w hc">
+<div class="eye">Associate ML Engineer · BytePX · Jaipur, India</div>
+<h1>Production AI that <span>doesn't hallucinate</span> on messy data.</h1>
+<p class="lead">AI/ML and data engineer building RAG systems, agentic tooling and data platforms with Python, FastAPI, Spark, Databricks and PostgreSQL.</p>
+<div class="btns"><a class="btn p" href="#projects">View projects</a><a class="btn rbtn" href="../assets/Rudra_Sharma_Resume.pdf" download>Download resume</a><a class="btn" href="https://github.com/RudraSharma3" target="_blank" rel="noopener">GitHub ↗</a><a class="btn" href="https://www.linkedin.com/in/rudra-sharma-3508a227b" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+<div class="proof"><div><b>15–20x</b><small>faster data engine vs ad-hoc scripts</small></div><div><b>95%</b><small>lower RAG query latency</small></div><div><b>50%</b><small>client marketing overhead cut</small></div><div><b>20+</b><small>employees' hours automated</small></div></div>
+</div></header>
+<section class="s" id="about"><div class="w ab rv">
+<div class="ph"><img src="../assets/portrait.jpg" alt="Portrait of Rudra Sharma"></div>
+<div><div class="eye">About</div><h2>Summary</h2>
+<p class="sub" style="max-width:none;margin-bottom:12px">AI/ML and Data Engineer building production RAG, agentic AI and data platforms (Python, FastAPI, Spark, Databricks, PostgreSQL, Docker). At BytePX I shipped a 15–20x faster data engine and a 50% client marketing-overhead cut; at UltraTech, a 95% latency cut for a RAG chatbot. I also built a hybrid RAG platform and the AI-OS agent framework.</p>
+<p class="sub" style="max-width:none"><b style="color:var(--ink)">Objective:</b> keep building AI systems that stay grounded instead of hallucinating, pipelines that survive real-world data, and models that can be explained rather than blindly trusted.</p>
+<div class="facts"><div><small>Role</small>Associate ML Engineer, BytePX</div><div><small>Education</small>B.Tech CSE (AIML), UPES · CGPA 8/10 · 2022–2026</div><div><small>Location</small>Jaipur, India</div></div>
+</div></div></section>
+<section class="s" id="exp" style="background:linear-gradient(var(--bg),var(--bg2),var(--bg))"><div class="w">
+<div class="eye rv">Experience</div><h2 class="rv">Where I've worked.</h2>
+<div class="tl">
+<div class="card ex rv"><div class="d">March 2026 — Present</div><div><h4>BytePX <span>· Associate ML Engineer</span></h4><ul>
+<li>Architected DataPurge Studio, an async multi-tenant SaaS data engine (FastAPI, PostgreSQL, Docker): complex multi-sheet workbooks in under 2 minutes at 99.9% accuracy, a 15–20x speedup.</li>
+<li>Built a multi-platform Data Tool ingesting from Salesforce, Amazon S3, Google Sheets, Dynamics 365 and cloud storage, with cleansing, schema-mapping, validation and an AI agent that runs tasks from natural-language prompts.</li>
+<li>Trained a Random Forest with SHAP explanations that cut a client's marketing overhead 50%; deployed proofs of concept on IBM watsonx.</li>
+<li>Cut fuzzy-matching time 10x with an O(N) lookahead sniffer and RapidFuzz (C++), streaming through io.BytesIO buffers and Starlette thread pools.</li>
+<li>Automated Databricks/Spark document processing, including a resume converter that cut processing time 90%.</li>
+<li>Automated ERP-to-employee hours reconciliation, removing 8–10 hours of manual work per month across 20+ employees.</li>
+<li>Mentored 2 junior engineers on Python, Spark DataFrames and Databricks across 3 internal and client projects.</li></ul></div></div>
+<div class="card ex rv"><div class="d">June — July 2025</div><div><h4>UltraTech Cement (Birla White) <span>· AI &amp; ML Intern</span></h4><ul><li>Built "Birbal 2.0", a multilingual agentic RAG chatbot on FastAPI; asynchronous retrieval cut query latency 95%.</li><li>Added Hindi–English support and contextual state tracking, improving query efficiency 60%.</li></ul></div></div>
+<div class="card ex rv"><div class="d">June — July 2025</div><div><h4>SmartBridge <span>· Generative AI Intern</span></h4><ul><li>Built GenAI prototypes (multilingual chatbots, predictive models) with FastAPI and Google Gemini APIs.</li></ul></div></div>
+</div></div></section>
+<section class="s" id="projects"><div class="w">
+<div class="eye rv">Projects</div><h2 class="rv">Selected work.</h2>
+<div class="card cs2 rv" id="feat"></div>
+<div class="lbl2">More projects — select one to open its full breakdown</div>
+<div class="pg" id="pg"></div>
+</div></section>
+<section class="s" id="skills" style="background:linear-gradient(var(--bg),var(--bg2),var(--bg))"><div class="w">
+<div class="eye rv">Technical skills</div><h2 class="rv">What I build with.</h2><div class="sg" id="sg"></div></div></section>
+<section class="s" id="certs"><div class="w">
+<div class="eye rv">Certifications</div><h2 class="rv">Verified credentials.</h2>
+<div class="card msft rv"><div class="mi">★</div><div><div class="eye">Featured</div><h3>Microsoft Certified: Azure AI Engineer Associate</h3><p class="sub" style="font-size:14px">Credential ID 957CF25F904A0B46 · Earned May 2026</p></div></div>
+<div class="cg" id="cg"></div>
+</div></section>
+<section class="s end" id="contact"><div class="w rv">
+<div class="eye">Contact</div><h2>Get in touch.</h2><p class="sub">Reach me for roles, collaborations or technical questions.</p>
+<div class="cg4"><a class="card" href="mailto:rudrasharma93511@gmail.com"><small>Email</small>rudrasharma93511@gmail.com</a><a class="card" href="https://github.com/RudraSharma3" target="_blank" rel="noopener"><small>GitHub</small>github.com/RudraSharma3</a><a class="card" href="https://www.linkedin.com/in/rudra-sharma-3508a227b" target="_blank" rel="noopener"><small>LinkedIn</small>in/rudra-sharma</a><a class="card rbtn" href="../assets/Rudra_Sharma_Resume.pdf" download><small>Resume</small>Download PDF</a></div>
+</div></section>
+<footer>© 2026 Rudra Sharma · Jaipur, India</footer>
+
+<script>
+/* reveal */
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target)}}),{threshold:.08});
+document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+
+/* Three.js hero: reactive node network */
+(function(){
+const cv=document.getElementById('gl');if(!window.THREE)return;
+const R=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});R.setPixelRatio(Math.min(devicePixelRatio,2));
+const S=new THREE.Scene(),C=new THREE.PerspectiveCamera(55,1,.1,100);C.position.z=9;
+const g=new THREE.Group();S.add(g);
+const N=110,pts=[],pos=new Float32Array(N*3);
+for(let i=0;i<N;i++){const r=3.4+Math.random()*1.6,t=Math.random()*6.283,p=Math.acos(2*Math.random()-1);
+const v=new THREE.Vector3(r*Math.sin(p)*Math.cos(t),r*Math.sin(p)*Math.sin(t),r*Math.cos(p));pts.push(v);pos.set([v.x,v.y,v.z],i*3)}
+const pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(pos,3));
+g.add(new THREE.Points(pg,new THREE.PointsMaterial({color:0x7da0ff,size:.07})));
+const lp=[];for(let i=0;i<N;i++)for(let j=i+1;j<N;j++)if(pts[i].distanceTo(pts[j])<1.7)lp.push(pts[i],pts[j]);
+g.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(lp),new THREE.LineBasicMaterial({color:0x6c8cff,transparent:true,opacity:.22})));
+const core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.5,1),new THREE.MeshBasicMaterial({color:0x35e0c2,wireframe:true,transparent:true,opacity:.35}));g.add(core);
+let mx=0,my=0;addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
+function rs(){const w=cv.clientWidth,h=cv.clientHeight;R.setSize(w,h,false);C.aspect=w/h;C.updateProjectionMatrix();const d=w>=1100;g.scale.setScalar(d?.85:.72);g.position.x=d?4.685*C.aspect*.56:0}
+rs();addEventListener('resize',rs);
+const still=matchMedia('(prefers-reduced-motion:reduce)').matches;
+(function f(){if(!still){g.rotation.y+=.0016;core.rotation.x+=.003}g.rotation.x+=(my*.5-g.rotation.x)*.03;g.rotation.z+=(-mx*.3-g.rotation.z)*.03;R.render(S,C);requestAnimationFrame(f)})();
+})();
+
+
+const PR=[
+{id:'dp',tag:'Data platform · BytePX',name:'DataPurge Studio',sub:'Asynchronous multi-tenant spreadsheet cleaning platform, architected at BytePX',link:'https://github.com/RudraSharma3/datapurge-studio',
+m:[['15–20x','Faster preprocessing'],['99.9%','Processing accuracy'],['94%','Fewer manual data errors'],['4.5h → 12m','Avg. prep time reduced']],
+p:'Enterprise teams cleaned complex multi-sheet Excel workbooks by hand or with one-off Pandas scripts: slow, unrepeatable, and prone to silently breaking cell formatting, formulas and layout.',
+b:'An async multi-tenant web platform: upload workbooks, get automatic schema and anomaly detection, configure non-destructive cleaning rules, review flagged records inline, and export sanitized files with formatting preserved.',
+t:'FastAPI streaming uploads through io.BytesIO buffers on Starlette thread pools; dynamic type downcasting and an O(N) lookahead sniffer for schema inference; RapidFuzz (C++) for fuzzy matching; OpenPyXL coordinate-mapping to preserve styles and formulas; PostgreSQL + SQLAlchemy for auth, sessions and audit logs.',
+r:'Complex multi-sheet workbooks in under two minutes at 99.9% accuracy, a 15–20x speedup over ad-hoc scripting, with a full audit trail of every removed record.',
+s:['FastAPI','Pandas','OpenPyXL','RapidFuzz','PostgreSQL','SQLAlchemy','React','JWT Auth','Docker'],
+f:[['React SPA','Wizard · Grid Editor'],['FastAPI','Auth · Async Tasks'],['Cleaning Engine','Pandas · OpenPyXL · RapidFuzz',1],['Storage','PostgreSQL']]},
+{id:'vox',tag:'Production RAG platform',name:'VoxContextEngine',sub:'Hybrid retrieval that keeps LLM answers grounded in source documents',link:'https://github.com/RudraSharma3/vox-context-engine',
+m:[['100%','Safety-run completeness'],['Dense + BM25','Hybrid retrieval'],['HNSW','Vector index']],
+p:'LLM answers drift away from the source material. Teams need responses locked to their own documents, plus a way to measure when the system can be trusted.',
+b:'A production-grade hybrid RAG platform on FastAPI and Docker that retrieves from ingested documents and grounds every answer in them, with an automated Python evaluation suite.',
+t:'Dense semantic search through Qdrant (all-MiniLM-L6-v2 embeddings, HNSW indexing) fused with sparse keyword retrieval via Rank-BM25. The evaluation suite benchmarks ingestion and retrieval precision.',
+r:'Hallucination-validation runs achieved a 100% safety-run completeness score.',
+s:['FastAPI','Docker','Qdrant','Rank-BM25','all-MiniLM-L6-v2'],
+f:[['Documents','Ingestion'],['Embeddings','MiniLM · HNSW'],['Qdrant + BM25','Hybrid retrieval',1],['LLM','Grounded answer']]},
+{id:'aios',tag:'Agent infrastructure',name:'AI-OS',sub:'Versioned operating layer for AI coding agents (Claude, Gemini, Codex)',link:'https://github.com/RudraSharma3',
+m:[['up to 5x','Lower agent latency'],['90%','Lower token cost'],['14-point','Health check']],
+p:'Working across several AI coding agents means duplicated setup, rules that drift apart and lessons that never get consolidated.',
+b:'A versioned operating layer (v2.0): adapter files per agent, project playbooks and a self-improvement loop that promotes only quality-checked lessons into one canonical rule hierarchy.',
+t:'Pinned-prefix prompt caching and multi-agent MCP orchestration; a self-healing test loop that auto-remediates failures before escalation; a pre-commit secret-interception hook and a 14-point health check.',
+r:'Agent latency cut up to 5x and token cost 90%, with zero-incident credential handling.',
+s:['MCP','Prompt caching','Multi-agent','Git hooks','Python'],
+f:[['Agent adapters','Claude · Gemini · Codex'],['Playbooks','Per project'],['Canonical rules','One hierarchy',1],['Self-improvement','Quality-gated lessons']]},
+{id:'eta',tag:'Applied ML',name:'Estimated Delivery Date Prediction',sub:'XGBoost model predicting e-commerce delivery windows',link:'https://github.com/RudraSharma3/Estimated_Delivery_Date',
+m:[['500K+','Shipment records'],['XGBoost','Model']],
+p:'E-commerce delivery estimates vary widely with supply-chain constraints, which makes ETAs unreliable.',
+b:'An XGBoost model that predicts delivery windows from historical shipment data.',
+t:'Advanced feature engineering and data-scaling pipelines to capture supply-chain constraints and minimize ETA prediction variance.',
+r:'Trained and optimized across 500K+ historical e-commerce shipment records.',
+s:['XGBoost','Pandas','Feature Engineering','Scikit-learn'],
+f:[['Shipment data','500K+ records'],['Features','Engineering · scaling'],['XGBoost','Training',1],['ETA','Delivery window']]},
+{id:'pneu',tag:'Healthcare ML · Research',name:'Pneumonia Detection & Genomic Analysis',sub:'Co-authored research on hybrid deep learning for non-invasive diagnostics',link:'https://github.com/RudraSharma3',
+m:[['94%','Pneumonia identification accuracy'],['CNN','Chest X-ray model']],
+p:'Clinical diagnostics need non-invasive tools that can combine imaging with genomic signals.',
+b:'Co-authored research on a hybrid deep learning architecture for non-invasive clinical diagnostics.',
+t:'CNNs trained on chest X-ray datasets for automated pneumonia identification, paired with logistic regression over genomic sequence data to predict multi-factor polygenic disorder risk.',
+r:'94% accuracy on automated pneumonia identification.',
+s:['CNN','Logistic Regression','TensorFlow','Research Paper'],
+f:[['Chest X-rays','Imaging data'],['CNN','Pneumonia detection',1],['Genomic data','Sequences'],['Logistic Regression','Polygenic risk']]},
+{id:'bir',tag:'Agentic RAG · UltraTech Cement',name:'Birbal 2.0',sub:'Hindi–English agentic RAG chatbot for regional technical teams',link:null,
+m:[['95%','Lower query latency'],['60%','Query efficiency gain'],['Hindi + English','Languages']],
+p:'Regional technical teams queried domain-specific documentation through blocking SQL/API calls that were slow to respond.',
+b:'Birbal 2.0, a multilingual agentic RAG chatbot on FastAPI for regional technical teams.',
+t:'Asynchronous retrieval replacing blocking SQL/API calls, Hindi–English support and contextual state tracking.',
+r:'Query response latency cut by 95% and query efficiency improved by 60%.',
+s:['FastAPI','RAG','NLP','Async'],
+f:[['Query','Hindi · English'],['Context','State tracking'],['Async retrieval','Docs',1],['Answer','Grounded reply']]}];
+let cur='dp';
+const feat=document.getElementById('feat'),pg=document.getElementById('pg');
+function fcard(p){return `<div class="ctop"><div><h3>${p.name}</h3><p class="sub" style="font-size:14px">${p.sub}</p></div>${p.link?`<a class="gh" href="${p.link}" target="_blank" rel="noopener" aria-label="${p.name} on GitHub">↗</a>`:`<div class="gl"><small>Repository coming soon</small><span class="gh off">↗</span></div>`}</div>
+<div class="mt">${p.m.map(x=>`<div><b>${x[0]}</b><small>${x[1]}</small></div>`).join('')}</div>
+<div class="c2"><div><h6>Problem</h6><p>${p.p}</p><h6>What I built</h6><p>${p.b}</p></div><div><h6>Technical approach</h6><p>${p.t}</p><h6>Result</h6><p>${p.r}</p></div></div>
+<div class="tg">${p.s.map(x=>`<span>${x}</span>`).join('')}</div>
+<div class="arch">${p.f.map((x,i)=>`${i?'<i>→</i>':''}<span class="${x[2]?'hl':''}">${x[0]}<small>${x[1]}</small></span>`).join('')}</div>`}
+function render(scroll){const p=PR.find(x=>x.id===cur);feat.innerHTML=fcard(p);pg.innerHTML='';
+PR.filter(x=>x.id!==cur).forEach(x=>{const c=document.createElement('div');c.className='card pc';c.tabIndex=0;c.setAttribute('role','button');
+c.innerHTML=`<div class="eye">${x.tag}</div><h4>${x.name}</h4><p>${x.sub}</p><div class="tg">${x.s.slice(0,4).map(y=>`<span>${y}</span>`).join('')}</div><div class="go">View full breakdown →</div>`;
+const go=()=>{cur=x.id;render(true)};c.onclick=go;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}};pg.appendChild(c)});
+if(scroll)feat.scrollIntoView({behavior:'smooth',block:'start'})}
+render(false);
+const CERTS=[{n:'Google Cloud Skill Badges',s:'25+ badges earned'},{n:'Java Gold Badge',s:'HackerRank'}]; /* add {n:'Name',s:'Issuer',file:'../assets/certificates/file.pdf'} */
+const cg=document.getElementById('cg');CERTS.forEach(c=>{const e=document.createElement(c.file?'a':'div');e.className='card rv';if(c.file){e.href=c.file;e.target='_blank';e.rel='noopener'}e.innerHTML=`<h4>${c.n}</h4><p>${c.s}</p>`;cg.appendChild(e);io.observe(e)});
+const SK=[['Programming',['Python','SQL','Java','JavaScript']],['AI / ML',['Scikit-learn','PyTorch','TensorFlow','XGBoost','SHAP','NLP']],['LLMs & Agents',['LLMs','RAG','Agentic AI','MCP','LangChain','Qdrant']],['Data Engineering',['Apache Spark','Databricks','Delta Lake','Pandas','ETL/ELT Pipelines','Data Validation']],['Backend',['FastAPI','Flask','REST APIs','PostgreSQL']],['Cloud & Tools',['Docker','Git & GitHub','Microsoft Azure','IBM watsonx']]];
+const sg=document.getElementById('sg');SK.forEach(([c,i])=>{const d=document.createElement('div');d.className='card rv';d.innerHTML=`<h5>${c}</h5><ul>${i.map(x=>`<li>${x}</li>`).join('')}</ul>`;sg.appendChild(d);io.observe(d)});
+
+const mb=document.getElementById('mb'),mm=document.getElementById('mm');
+mb.onclick=()=>{const o=mm.classList.toggle('open');mb.classList.toggle('open',o);mb.setAttribute('aria-expanded',o)};
+mm.querySelectorAll('a').forEach(a=>a.onclick=()=>{mm.classList.remove('open');mb.classList.remove('open')});
+const na=[...document.querySelectorAll('#nv a')],so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)na.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+na.forEach(a=>{const t=document.querySelector(a.getAttribute('href'));t&&so.observe(t)});
+</script>
+</body>
+</html>
