@@ -1,18 +1,14 @@
 # Portfolio
 
-Structure
-- index.html            -> the site (root, no redirect)
+- index.html (site root, no redirect)
 - code/style.css, code/script.js
-- assets/portrait.jpg    -> replace with your full-quality photo (same name)
-- assets/Rudra_Sharma_Resume.pdf -> replace when your resume changes
-- assets/og-image.png    -> link-preview image (1200x630)
-- assets/certificates/   -> all certificates and badges (see README.txt there)
+- assets/portrait.jpg  (replace with a full-quality photo, same name; shown at 4:5)
+- assets/Rudra_Sharma_Resume.pdf
+- assets/og-image.png (link-preview image)
+- assets/certificates/ (Microsoft PDF, 22 Google Cloud badges + thumbs/)
 
-Edit points (code/script.js)
-- PR array: each project `link` (null shows "Repository coming soon")
-- CERTS array: add certificates
+Edit points in code/script.js: PR (projects, set link to null for "Repository coming soon"), BADGES, OTHER.
 
-Before publishing
-- In index.html, og:image uses https://rudrasharma3.github.io/Portfolio/assets/og-image.png. Change it to your real final URL.
-- Preview locally: python3 -m http.server, open http://localhost:8000/
-- GitHub Pages / Netlify / Vercel: deploy this folder as the root.
+Before publishing: in index.html change the og:image URL to your final address.
+Preview locally: python3 -m http.server, then open http://localhost:8000/
+Deploy this folder as the root on GitHub Pages, Netlify or Vercel.

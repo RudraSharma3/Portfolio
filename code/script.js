@@ -6,7 +6,7 @@ document.querySelectorAll('.rv').forEach(e=>io.observe(e));
 addEventListener("DOMContentLoaded",function(){
 const cv=document.getElementById('gl');if(!window.THREE)return;
 const R=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});R.setPixelRatio(Math.min(devicePixelRatio,2));
-const S=new THREE.Scene(),C=new THREE.PerspectiveCamera(55,1,.1,100);C.position.z=9;
+const S=new THREE.Scene(),C=new THREE.PerspectiveCamera(30,1,.1,100);C.position.z=15.5;
 const g=new THREE.Group();S.add(g);
 const N=110,pts=[],pos=new Float32Array(N*3);
 for(let i=0;i<N;i++){const r=3.4+Math.random()*1.6,t=Math.random()*6.283,p=Math.acos(2*Math.random()-1);
@@ -17,8 +17,8 @@ const lp=[];for(let i=0;i<N;i++)for(let j=i+1;j<N;j++)if(pts[i].distanceTo(pts[j
 g.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(lp),new THREE.LineBasicMaterial({color:0x6c8cff,transparent:true,opacity:.22})));
 const core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.5,1),new THREE.MeshBasicMaterial({color:0x35e0c2,wireframe:true,transparent:true,opacity:.35}));g.add(core);
 let mx=0,my=0;addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
-function rs(){const w=cv.clientWidth,h=cv.clientHeight;R.setSize(w,h,false);C.aspect=w/h;C.updateProjectionMatrix();const d=w>=1100;g.scale.setScalar(d?.85:.72);g.position.x=d?4.685*C.aspect*.56:0}
-rs();addEventListener('resize',rs);
+function rs(){const w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;R.setSize(w,h,false);C.aspect=w/h;const d=w>=1100;g.scale.setScalar(d?.82:.62);if(d)C.setViewOffset(w,h,-w*.26,0,w,h);else C.clearViewOffset();C.updateProjectionMatrix()}
+rs();new ResizeObserver(rs).observe(cv);
 const still=matchMedia('(prefers-reduced-motion:reduce)').matches;
 let on=false,inView=true,raf;
 function f(){if(!on)return;if(!still){g.rotation.y+=.0016;core.rotation.x+=.003}g.rotation.x+=(my*.5-g.rotation.x)*.03;g.rotation.z+=(-mx*.3-g.rotation.z)*.03;R.render(S,C);raf=requestAnimationFrame(f)}
@@ -90,8 +90,41 @@ c.innerHTML=`<div class="eye">${x.tag}</div><h4>${x.name}</h4><p>${x.sub}</p><di
 const go=()=>{cur=x.id;render(true)};c.onclick=go;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}};pg.appendChild(c)});
 if(scroll)feat.scrollIntoView({behavior:'smooth',block:'start'})}
 render(false);
-const CERTS=[{n:'Google Cloud Skill Badges',s:'25+ badges earned'},{n:'Java Gold Badge',s:'HackerRank'}]; /* add {n:'Name',s:'Issuer',file:'./assets/certificates/file.pdf'} */
-const cg=document.getElementById('cg');CERTS.forEach(c=>{const e=document.createElement(c.file?'a':'div');e.className='card rv';if(c.file){e.href=c.file;e.target='_blank';e.rel='noopener'}e.innerHTML=`<h4>${c.n}</h4><p>${c.s}</p>`;cg.appendChild(e);io.observe(e)});
+const BADGES=[
+{f:"responsible-ai-interpretability-transparency",n:"Responsible AI for Developers: Interpretability & Transparency",g:"Responsible AI"},
+{f:"responsible-ai-fairness-bias",n:"Responsible AI for Developers: Fairness & Bias",g:"Responsible AI"},
+{f:"responsible-ai-privacy-safety",n:"Responsible AI for Developers: Privacy & Safety",g:"Responsible AI"},
+{f:"applying-ai-principles-google-cloud",n:"Applying AI Principles with Google Cloud",g:"Responsible AI"},
+{f:"skill-genai-apps-gemini-streamlit",n:"Develop GenAI Apps with Gemini and Streamlit",g:"Skill badges"},
+{f:"skill-gemini-multimodal-rag",n:"Inspect Rich Documents with Gemini Multimodality and Multimodal RAG",g:"Skill badges"},
+{f:"gemini-end-to-end-sdlc",n:"Gemini for end-to-end SDLC",g:"Gemini for…"},
+{f:"gemini-devops-engineers",n:"Gemini for DevOps Engineers",g:"Gemini for…"},
+{f:"gemini-security-engineers",n:"Gemini for Security Engineers",g:"Gemini for…"},
+{f:"gemini-network-engineers",n:"Gemini for Network Engineers",g:"Gemini for…"},
+{f:"gemini-cloud-architects",n:"Gemini for Cloud Architects",g:"Gemini for…"},
+{f:"gemini-application-developers",n:"Gemini for Application Developers",g:"Gemini for…"},
+{f:"gemini-data-scientists-analysts",n:"Gemini for Data Scientists and Analysts",g:"Gemini for…"},
+{f:"intro-generative-ai",n:"Introduction to Generative AI",g:"GenAI & ML"},
+{f:"intro-vertex-ai-studio",n:"Introduction to Vertex AI Studio",g:"GenAI & ML"},
+{f:"intro-image-generation",n:"Introduction to Image Generation",g:"GenAI & ML"},
+{f:"image-captioning-models",n:"Create Image Captioning Models",g:"GenAI & ML"},
+{f:"attention-mechanism",n:"Attention Mechanism",g:"GenAI & ML"},
+{f:"encoder-decoder-architecture",n:"Encoder-Decoder Architecture",g:"GenAI & ML"},
+{f:"transformer-models-bert",n:"Transformer Models and BERT Model",g:"GenAI & ML"},
+{f:"vector-search-embeddings",n:"Vector Search and Embeddings",g:"GenAI & ML"},
+{f:"mlops-generative-ai",n:"Machine Learning Operations (MLOps) for Generative AI",g:"GenAI & ML"}];
+const OTHER=[{n:'Java Gold Badge',s:'HackerRank'}];
+const cgx=document.getElementById('cg'),cf=document.getElementById('cf'),co=document.getElementById('co');
+document.getElementById('bn').textContent=BADGES.length+' Google Cloud badges · Generative AI, Responsible AI, Gemini';
+const GR=['All',...new Set(BADGES.map(b=>b.g))];
+function showB(g){cf.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.g===g));cgx.querySelectorAll('.bd').forEach(b=>b.hidden=!(g==='All'||b.dataset.g===g))}
+GR.forEach(g=>{const b=document.createElement('button');b.type='button';b.dataset.g=g;b.textContent=g==='All'?'All ('+BADGES.length+')':g;b.onclick=()=>showB(g);cf.appendChild(b)});
+let lb;function openLB(b,opener){if(!lb){lb=document.createElement('div');lb.className='lb';lb.setAttribute('role','dialog');lb.setAttribute('aria-modal','true');lb.innerHTML='<img alt=""><p></p><button type="button" aria-label="Close">×</button>';document.body.appendChild(lb);const x=()=>{lb.classList.remove('open');lb.opener&&lb.opener.focus()};lb.onclick=x;document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('open'))x()})}
+lb.opener=opener;lb.querySelector('img').src='./assets/certificates/'+b.f+'.png';lb.querySelector('img').alt=b.n+' badge';lb.querySelector('p').textContent=b.n;lb.classList.add('open');lb.querySelector('button').focus()}
+BADGES.forEach(b=>{const e=document.createElement('button');e.type='button';e.className='bd';e.dataset.g=b.g;e.setAttribute('aria-label',b.n+' — view badge');
+e.innerHTML=`<img src="./assets/certificates/thumbs/${b.f}.webp" alt="${b.n} badge" width="440" height="400" loading="lazy" decoding="async"><span>${b.n}</span>`;e.onclick=()=>openLB(b,e);cgx.appendChild(e)});
+showB('All');
+OTHER.forEach(c=>{const e=document.createElement('div');e.className='card rv';e.innerHTML=`<h4>${c.n}</h4><p>${c.s}</p>`;co.appendChild(e);io.observe(e)});
 const SK=[['Programming',['Python','SQL','Java','JavaScript']],['AI / ML',['Scikit-learn','PyTorch','TensorFlow','XGBoost','SHAP','NLP']],['LLMs & Agents',['LLMs','RAG','Agentic AI','MCP','LangChain','Qdrant']],['Data Engineering',['Apache Spark','Databricks','Delta Lake','Pandas','ETL/ELT Pipelines','Data Validation']],['Backend',['FastAPI','Flask','REST APIs','PostgreSQL']],['Cloud & Tools',['Docker','Git & GitHub','Microsoft Azure','IBM watsonx']]];
 const sg=document.getElementById('sg');SK.forEach(([c,i])=>{const d=document.createElement('div');d.className='card rv';d.innerHTML=`<h5>${c}</h5><ul>${i.map(x=>`<li>${x}</li>`).join('')}</ul>`;sg.appendChild(d);io.observe(d)});
 
