@@ -26,6 +26,8 @@ The contact section plays its own short sequence when it's mostly on screen. `pr
 - **Add a repo to the archive:** add a line to `ARCHIVE` with the year the repo was created.
 - **Add a badge:** drop `<slug>.png` in `assets/certificates/`, make `thumbs/<slug>.webp` (about 440 px wide), add a line to `BADGES`.
 - **Update numbers:** only use figures that appear in the resume or a public repo.
+- **After changing CSS or JS:** bump the `?v=` number on the three `code/` links at the top and bottom of `index.html`,
+  otherwise browsers that visited before keep using the old file for a while.
 
 ## Preview locally
 
