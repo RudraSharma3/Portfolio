@@ -1,137 +1,314 @@
-/* reveal */
-const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target)}}),{threshold:.08});
-document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+/* Behaviour for the portfolio. Content lives in data.js.
+   Motion follows one rule: things fade and rise a little as they scroll in, once. */
+(function () {
+  'use strict';
 
-/* Three.js hero: reactive node network */
-addEventListener("DOMContentLoaded",function(){
-const cv=document.getElementById('gl');if(!window.THREE)return;
-const R=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});R.setPixelRatio(Math.min(devicePixelRatio,2));
-const S=new THREE.Scene(),C=new THREE.PerspectiveCamera(30,1,.1,100);C.position.z=15.5;
-const g=new THREE.Group();S.add(g);
-const N=110,pts=[],pos=new Float32Array(N*3);
-for(let i=0;i<N;i++){const r=3.4+Math.random()*1.6,t=Math.random()*6.283,p=Math.acos(2*Math.random()-1);
-const v=new THREE.Vector3(r*Math.sin(p)*Math.cos(t),r*Math.sin(p)*Math.sin(t),r*Math.cos(p));pts.push(v);pos.set([v.x,v.y,v.z],i*3)}
-const pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(pos,3));
-g.add(new THREE.Points(pg,new THREE.PointsMaterial({color:0x7da0ff,size:.07})));
-const lp=[];for(let i=0;i<N;i++)for(let j=i+1;j<N;j++)if(pts[i].distanceTo(pts[j])<1.7)lp.push(pts[i],pts[j]);
-g.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(lp),new THREE.LineBasicMaterial({color:0x6c8cff,transparent:true,opacity:.22})));
-const core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.5,1),new THREE.MeshBasicMaterial({color:0x35e0c2,wireframe:true,transparent:true,opacity:.35}));g.add(core);
-let mx=0,my=0;addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
-function rs(){const w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;R.setSize(w,h,false);C.aspect=w/h;const d=w>=1100;g.scale.setScalar(d?.82:.62);if(d)C.setViewOffset(w,h,-w*.26,0,w,h);else C.clearViewOffset();C.updateProjectionMatrix()}
-rs();new ResizeObserver(rs).observe(cv);
-const still=matchMedia('(prefers-reduced-motion:reduce)').matches;
-let on=false,inView=true,raf;
-function f(){if(!on)return;if(!still){g.rotation.y+=.0016;core.rotation.x+=.003}g.rotation.x+=(my*.5-g.rotation.x)*.03;g.rotation.z+=(-mx*.3-g.rotation.z)*.03;R.render(S,C);raf=requestAnimationFrame(f)}
-function go(){if(!on&&inView&&!document.hidden){on=true;f()}}function stop(){on=false;cancelAnimationFrame(raf)}
-new IntersectionObserver(e=>{inView=e[0].isIntersecting;inView?go():stop()}).observe(cv);
-document.addEventListener("visibilitychange",()=>document.hidden?stop():go());go();
-});
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const pad = (n) => String(n).padStart(2, '0');
+  const arrowOut = '<span class="arrow" aria-hidden="true">↗</span>';
 
+  /* ---------- scroll reveal (fade + 16px rise, once) ---------- */
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('is-in');
+      revealIO.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.01 });
+  // with reduced motion there is nothing to animate, so show everything straight away
+  const watch = (root = document) => $$('[data-reveal], .plate, .langbar, .receipt', root)
+    .forEach((el) => (reduce ? el.classList.add('is-in') : revealIO.observe(el)));
 
-const PR=[
-{id:'dp',tag:'Data platform · BytePX',name:'DataPurge Studio',sub:'Asynchronous multi-tenant spreadsheet cleaning platform, architected at BytePX',link:'https://github.com/RudraSharma3/datapurge-studio',
-m:[['15–20x','Faster preprocessing'],['99.9%','Processing accuracy'],['94%','Fewer manual data errors'],['4.5h → 12m','Avg. prep time reduced']],
-p:'Enterprise teams cleaned complex multi-sheet Excel workbooks by hand or with one-off Pandas scripts: slow, unrepeatable, and prone to silently breaking cell formatting, formulas and layout.',
-b:'An async multi-tenant web platform: upload workbooks, get automatic schema and anomaly detection, configure non-destructive cleaning rules, review flagged records inline, and export sanitized files with formatting preserved.',
-t:'FastAPI streaming uploads through io.BytesIO buffers on Starlette thread pools; dynamic type downcasting and an O(N) lookahead sniffer for schema inference; RapidFuzz (C++) for fuzzy matching; OpenPyXL coordinate-mapping to preserve styles and formulas; PostgreSQL + SQLAlchemy for auth, sessions and audit logs.',
-r:'Complex multi-sheet workbooks in under two minutes at 99.9% accuracy, a 15–20x speedup over ad-hoc scripting, with a full audit trail of every removed record.',
-s:['FastAPI','Pandas','OpenPyXL','RapidFuzz','PostgreSQL','SQLAlchemy','React','JWT Auth','Docker'],
-f:[['React SPA','Wizard · Grid Editor'],['FastAPI','Auth · Async Tasks'],['Cleaning Engine','Pandas · OpenPyXL · RapidFuzz',1],['Storage','PostgreSQL']]},
-{id:'vox',tag:'Production RAG platform',name:'VoxContextEngine',sub:'Hybrid retrieval that keeps LLM answers grounded in source documents',link:'https://github.com/RudraSharma3/vox-context-engine',
-m:[['100%','Safety-run completeness'],['Dense + BM25','Hybrid retrieval'],['HNSW','Vector index']],
-p:'LLM answers drift away from the source material. Teams need responses locked to their own documents, plus a way to measure when the system can be trusted.',
-b:'A production-grade hybrid RAG platform on FastAPI and Docker that retrieves from ingested documents and grounds every answer in them, with an automated Python evaluation suite.',
-t:'Dense semantic search through Qdrant (all-MiniLM-L6-v2 embeddings, HNSW indexing) fused with sparse keyword retrieval via Rank-BM25. The evaluation suite benchmarks ingestion and retrieval precision.',
-r:'Hallucination-validation runs achieved a 100% safety-run completeness score.',
-s:['FastAPI','Docker','Qdrant','Rank-BM25','all-MiniLM-L6-v2'],
-f:[['Documents','Ingestion'],['Embeddings','MiniLM · HNSW'],['Qdrant + BM25','Hybrid retrieval',1],['LLM','Grounded answer']]},
-{id:'aios',tag:'Agent infrastructure',name:'AI-OS',sub:'Versioned operating layer for AI coding agents (Claude, Gemini, Codex)',link:'https://github.com/RudraSharma3',
-m:[['up to 5x','Lower agent latency'],['90%','Lower token cost'],['14-point','Health check']],
-p:'Working across several AI coding agents means duplicated setup, rules that drift apart and lessons that never get consolidated.',
-b:'A versioned operating layer (v2.0): adapter files per agent, project playbooks and a self-improvement loop that promotes only quality-checked lessons into one canonical rule hierarchy.',
-t:'Pinned-prefix prompt caching and multi-agent MCP orchestration; a self-healing test loop that auto-remediates failures before escalation; a pre-commit secret-interception hook and a 14-point health check.',
-r:'Agent latency cut up to 5x and token cost 90%, with zero-incident credential handling.',
-s:['MCP','Prompt caching','Multi-agent','Git hooks','Python'],
-f:[['Agent adapters','Claude · Gemini · Codex'],['Playbooks','Per project'],['Canonical rules','One hierarchy',1],['Self-improvement','Quality-gated lessons']]},
-{id:'eta',tag:'Applied ML',name:'Estimated Delivery Date Prediction',sub:'XGBoost model predicting e-commerce delivery windows',link:'https://github.com/RudraSharma3/Estimated_Delivery_Date',
-m:[['500K+','Shipment records'],['XGBoost','Model']],
-p:'E-commerce delivery estimates vary widely with supply-chain constraints, which makes ETAs unreliable.',
-b:'An XGBoost model that predicts delivery windows from historical shipment data.',
-t:'Advanced feature engineering and data-scaling pipelines to capture supply-chain constraints and minimize ETA prediction variance.',
-r:'Trained and optimized across 500K+ historical e-commerce shipment records.',
-s:['XGBoost','Pandas','Feature Engineering','Scikit-learn'],
-f:[['Shipment data','500K+ records'],['Features','Engineering · scaling'],['XGBoost','Training',1],['ETA','Delivery window']]},
-{id:'pneu',tag:'Healthcare ML · Research',name:'Pneumonia Detection & Genomic Analysis',sub:'Co-authored research on hybrid deep learning for non-invasive diagnostics',link:'https://github.com/RudraSharma3',
-m:[['94%','Pneumonia identification accuracy'],['CNN','Chest X-ray model']],
-p:'Clinical diagnostics need non-invasive tools that can combine imaging with genomic signals.',
-b:'Co-authored research on a hybrid deep learning architecture for non-invasive clinical diagnostics.',
-t:'CNNs trained on chest X-ray datasets for automated pneumonia identification, paired with logistic regression over genomic sequence data to predict multi-factor polygenic disorder risk.',
-r:'94% accuracy on automated pneumonia identification.',
-s:['CNN','Logistic Regression','TensorFlow','Research Paper'],
-f:[['Chest X-rays','Imaging data'],['CNN','Pneumonia detection',1],['Genomic data','Sequences'],['Logistic Regression','Polygenic risk']]},
-{id:'bir',tag:'Agentic RAG · UltraTech Cement',name:'Birbal 2.0',sub:'Hindi–English agentic RAG chatbot for regional technical teams',link:null,
-m:[['95%','Lower query latency'],['60%','Query efficiency gain'],['Hindi + English','Languages']],
-p:'Regional technical teams queried domain-specific documentation through blocking SQL/API calls that were slow to respond.',
-b:'Birbal 2.0, a multilingual agentic RAG chatbot on FastAPI for regional technical teams.',
-t:'Asynchronous retrieval replacing blocking SQL/API calls, Hindi–English support and contextual state tracking.',
-r:'Query response latency cut by 95% and query efficiency improved by 60%.',
-s:['FastAPI','RAG','NLP','Async'],
-f:[['Query','Hindi · English'],['Context','State tracking'],['Async retrieval','Docs',1],['Answer','Grounded reply']]}];
-let cur='dp';
-const feat=document.getElementById('feat'),pg=document.getElementById('pg');
-function fcard(p){return `<div class="ctop"><div><h3>${p.name}</h3><p class="sub" style="font-size:14px">${p.sub}</p></div>${p.link?`<a class="gh" href="${p.link}" target="_blank" rel="noopener" aria-label="${p.name} on GitHub">↗</a>`:`<div class="gl"><small>Repository coming soon</small><span class="gh off">↗</span></div>`}</div>
-<div class="mt">${p.m.map(x=>`<div><b>${x[0]}</b><small>${x[1]}</small></div>`).join('')}</div>
-<div class="c2"><div><h6>Problem</h6><p>${p.p}</p><h6>What I built</h6><p>${p.b}</p></div><div><h6>Technical approach</h6><p>${p.t}</p><h6>Result</h6><p>${p.r}</p></div></div>
-<div class="tg">${p.s.map(x=>`<span>${x}</span>`).join('')}</div>
-<div class="arch">${p.f.map((x,i)=>`${i?'<i>→</i>':''}<span class="${x[2]?'hl':''}">${x[0]}<small>${x[1]}</small></span>`).join('')}</div>`}
-function render(scroll){const p=PR.find(x=>x.id===cur);feat.innerHTML=fcard(p);pg.innerHTML='';
-PR.filter(x=>x.id!==cur).forEach(x=>{const c=document.createElement('div');c.className='card pc';c.tabIndex=0;c.setAttribute('role','button');
-c.innerHTML=`<div class="eye">${x.tag}</div><h4>${x.name}</h4><p>${x.sub}</p><div class="tg">${x.s.slice(0,4).map(y=>`<span>${y}</span>`).join('')}</div><div class="go">View full breakdown →</div>`;
-const go=()=>{cur=x.id;render(true)};c.onclick=go;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}};pg.appendChild(c)});
-if(scroll)feat.scrollIntoView({behavior:'smooth',block:'start'})}
-render(false);
-const BADGES=[
-{f:"responsible-ai-interpretability-transparency",n:"Responsible AI for Developers: Interpretability & Transparency",g:"Responsible AI"},
-{f:"responsible-ai-fairness-bias",n:"Responsible AI for Developers: Fairness & Bias",g:"Responsible AI"},
-{f:"responsible-ai-privacy-safety",n:"Responsible AI for Developers: Privacy & Safety",g:"Responsible AI"},
-{f:"applying-ai-principles-google-cloud",n:"Applying AI Principles with Google Cloud",g:"Responsible AI"},
-{f:"skill-genai-apps-gemini-streamlit",n:"Develop GenAI Apps with Gemini and Streamlit",g:"Skill badges"},
-{f:"skill-gemini-multimodal-rag",n:"Inspect Rich Documents with Gemini Multimodality and Multimodal RAG",g:"Skill badges"},
-{f:"gemini-end-to-end-sdlc",n:"Gemini for end-to-end SDLC",g:"Gemini for…"},
-{f:"gemini-devops-engineers",n:"Gemini for DevOps Engineers",g:"Gemini for…"},
-{f:"gemini-security-engineers",n:"Gemini for Security Engineers",g:"Gemini for…"},
-{f:"gemini-network-engineers",n:"Gemini for Network Engineers",g:"Gemini for…"},
-{f:"gemini-cloud-architects",n:"Gemini for Cloud Architects",g:"Gemini for…"},
-{f:"gemini-application-developers",n:"Gemini for Application Developers",g:"Gemini for…"},
-{f:"gemini-data-scientists-analysts",n:"Gemini for Data Scientists and Analysts",g:"Gemini for…"},
-{f:"intro-generative-ai",n:"Introduction to Generative AI",g:"GenAI & ML"},
-{f:"intro-vertex-ai-studio",n:"Introduction to Vertex AI Studio",g:"GenAI & ML"},
-{f:"intro-image-generation",n:"Introduction to Image Generation",g:"GenAI & ML"},
-{f:"image-captioning-models",n:"Create Image Captioning Models",g:"GenAI & ML"},
-{f:"attention-mechanism",n:"Attention Mechanism",g:"GenAI & ML"},
-{f:"encoder-decoder-architecture",n:"Encoder-Decoder Architecture",g:"GenAI & ML"},
-{f:"transformer-models-bert",n:"Transformer Models and BERT Model",g:"GenAI & ML"},
-{f:"vector-search-embeddings",n:"Vector Search and Embeddings",g:"GenAI & ML"},
-{f:"mlops-generative-ai",n:"Machine Learning Operations (MLOps) for Generative AI",g:"GenAI & ML"}];
-const OTHER=[{n:'Java Gold Badge',s:'HackerRank'}];
-const cgx=document.getElementById('cg'),cf=document.getElementById('cf'),co=document.getElementById('co');
-document.getElementById('bn').textContent=BADGES.length+' Google Cloud badges · Generative AI, Responsible AI, Gemini';
-const GR=['All',...new Set(BADGES.map(b=>b.g))];
-function showB(g){cf.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.g===g));cgx.querySelectorAll('.bd').forEach(b=>b.hidden=!(g==='All'||b.dataset.g===g))}
-GR.forEach(g=>{const b=document.createElement('button');b.type='button';b.dataset.g=g;b.textContent=g==='All'?'All ('+BADGES.length+')':g;b.onclick=()=>showB(g);cf.appendChild(b)});
-let lb;function openLB(b,opener){if(!lb){lb=document.createElement('div');lb.className='lb';lb.setAttribute('role','dialog');lb.setAttribute('aria-modal','true');lb.innerHTML='<img alt=""><p></p><button type="button" aria-label="Close">×</button>';document.body.appendChild(lb);const x=()=>{lb.classList.remove('open');lb.opener&&lb.opener.focus()};lb.onclick=x;document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('open'))x()})}
-lb.opener=opener;lb.querySelector('img').src='./assets/certificates/'+b.f+'.png';lb.querySelector('img').alt=b.n+' badge';lb.querySelector('p').textContent=b.n;lb.classList.add('open');lb.querySelector('button').focus()}
-BADGES.forEach(b=>{const e=document.createElement('button');e.type='button';e.className='bd';e.dataset.g=b.g;e.setAttribute('aria-label',b.n+' — view badge');
-e.innerHTML=`<img src="./assets/certificates/thumbs/${b.f}.webp" alt="${b.n} badge" width="440" height="400" loading="lazy" decoding="async"><span>${b.n}</span>`;e.onclick=()=>openLB(b,e);cgx.appendChild(e)});
-showB('All');
-OTHER.forEach(c=>{const e=document.createElement('div');e.className='card rv';e.innerHTML=`<h4>${c.n}</h4><p>${c.s}</p>`;co.appendChild(e);io.observe(e)});
-const SK=[['Programming',['Python','SQL','Java','JavaScript']],['AI / ML',['Scikit-learn','PyTorch','TensorFlow','XGBoost','SHAP','NLP']],['LLMs & Agents',['LLMs','RAG','Agentic AI','MCP','LangChain','Qdrant']],['Data Engineering',['Apache Spark','Databricks','Delta Lake','Pandas','ETL/ELT Pipelines','Data Validation']],['Backend',['FastAPI','Flask','REST APIs','PostgreSQL']],['Cloud & Tools',['Docker','Git & GitHub','Microsoft Azure','IBM watsonx']]];
-const sg=document.getElementById('sg');SK.forEach(([c,i])=>{const d=document.createElement('div');d.className='card rv';d.innerHTML=`<h5>${c}</h5><ul>${i.map(x=>`<li>${x}</li>`).join('')}</ul>`;sg.appendChild(d);io.observe(d)});
+  /* ---------- 1. projects as chapters ---------- */
+  function plate(p, i) {
+    const nodes = p.flow.map((f, k) =>
+      (k ? `<span class="link-v" style="--i:${k * 2 - 1}" aria-hidden="true"></span>` : '') +
+      `<div class="node${f[2] ? ' hl' : ''}" style="--i:${k * 2}"><b>${esc(f[0])}</b><small>${esc(f[1])}</small></div>`
+    ).join('');
+    return `<div class="plate" aria-hidden="true">
+      <div class="plate-top"><span>Fig. ${pad(i + 1)}</span><span>${esc(p.year)}</span></div>
+      <div class="plate-in">${nodes}</div>
+      <div class="plate-cap"><span>${esc(p.fig)}</span></div>
+      <span class="plate-num">${pad(i + 1)}</span>
+    </div>`;
+  }
 
-const mb=document.getElementById('mb'),mm=document.getElementById('mm');
-mb.onclick=()=>{const o=mm.classList.toggle('open');mb.classList.toggle('open',o);mb.setAttribute('aria-expanded',o)};
-mm.querySelectorAll('a').forEach(a=>a.onclick=()=>{mm.classList.remove('open');mb.classList.remove('open')});
-const na=[...document.querySelectorAll('#nv a')],so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)na.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
-na.forEach(a=>{const t=document.querySelector(a.getAttribute('href'));t&&so.observe(t)});
-const cl=()=>{mm.classList.remove('open');mb.classList.remove('open');mb.setAttribute('aria-expanded','false')};
-document.addEventListener('keydown',e=>{if(e.key==='Escape')cl()});document.addEventListener('click',e=>{if(!e.target.closest('nav'))cl()});
+  function linksHTML(p, cls) {
+    return p.links.map(([label, url]) => `<a class="${cls}" href="${esc(url)}" target="_blank" rel="noopener">${esc(label)} ${arrowOut}</a>`).join('');
+  }
+
+  const chapters = $('#chapters');
+  if (chapters && typeof PROJECTS !== 'undefined') {
+    chapters.innerHTML = PROJECTS.map((p, i) => `
+      <li class="chapter${i % 2 ? ' flip' : ''}" id="p-${p.id}" data-reveal>
+        <button class="plate-btn" type="button" data-open="${p.id}" aria-label="Open the full breakdown of ${esc(p.name)}">${plate(p, i)}</button>
+        <div class="ch-text">
+          <p class="eyebrow">Project ${pad(i + 1)}</p>
+          <h3 class="t-h1">${esc(p.name)}</h3>
+          <p class="ch-meta">${esc(p.where)} · ${esc(p.year)}</p>
+          <p class="t-lead">${esc(p.line)}</p>
+          <div class="minis">${p.metrics.map((m) => `<div><b>${esc(m[0])}</b><small>${esc(m[1])}</small></div>`).join('')}</div>
+          <div class="ch-links">
+            <button class="more" type="button" data-open="${p.id}">Read the breakdown <span class="arrow" aria-hidden="true">→</span></button>
+            ${p.links.length ? linksHTML(p, 'ext') : `<span class="note">${esc(p.note || 'Private repository')}</span>`}
+          </div>
+        </div>
+      </li>`).join('');
+  }
+
+  /* ---------- 2. habits ---------- */
+  const habits = $('#habits-list');
+  if (habits && typeof HABITS !== 'undefined') {
+    habits.innerHTML = HABITS.map((h, i) => `
+      <li data-reveal style="--d:${(i % 4) * 0.06}s">
+        <button class="habit" type="button" data-habit="${i}">
+          <span class="n">${pad(i + 1)}</span>
+          <h3>${esc(h.title)}</h3>
+          <p>${esc(h.line)}</p>
+          <span class="more">Where it shows up <span class="arrow" aria-hidden="true">→</span></span>
+        </button>
+      </li>`).join('');
+  }
+
+  /* ---------- 3. GitHub archive, by year ---------- */
+  const tabs = $('#tabs'), repos = $('#repos'), yearNote = $('#year-note');
+  const langColor = (l) => (LANGS.find((x) => x[0] === l) || LANGS[LANGS.length - 1])[2];
+
+  function renderYear(y, animate) {
+    const list = ARCHIVE.filter((r) => r.y === y);
+    const html = list.map((r) => `
+      <li class="repo">
+        <h3>${esc(r.name)}${r.tag ? `<em>${esc(r.tag)}</em>` : ''}</h3>
+        <div class="go">
+          ${r.live ? `<a href="${esc(r.live)}" target="_blank" rel="noopener" aria-label="${esc(r.name)} live site">Live ${arrowOut}</a>` : ''}
+          <a href="${GH + esc(r.repo)}" target="_blank" rel="noopener" aria-label="${esc(r.name)} on GitHub">Code ${arrowOut}</a>
+        </div>
+        <p>${esc(r.line)}</p>
+        <div class="meta"><span><i style="background:${langColor(r.lang)}"></i>${esc(r.lang)}</span><span>github.com/RudraSharma3/${esc(r.repo)}</span></div>
+      </li>`).join('');
+    const swap = () => {
+      repos.innerHTML = html;
+      yearNote.textContent = YEAR_NOTES[y] || '';
+      repos.classList.remove('is-swapping');
+    };
+    if (animate && !reduce) { repos.classList.add('is-swapping'); setTimeout(swap, 160); } else swap();
+    $$('.tab', tabs).forEach((t) => {
+      const on = +t.dataset.year === y;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+    });
+  }
+
+  if (tabs && typeof ARCHIVE !== 'undefined') {
+    const years = [...new Set(ARCHIVE.map((r) => r.y))].sort((a, b) => b - a);
+    tabs.innerHTML = years.map((y) => `<button class="tab" type="button" role="tab" id="tab-${y}" aria-controls="repos" data-year="${y}">${y} <span>${ARCHIVE.filter((r) => r.y === y).length}</span></button>`).join('');
+    tabs.addEventListener('click', (e) => {
+      const t = e.target.closest('.tab');
+      if (t && t.getAttribute('aria-selected') !== 'true') renderYear(+t.dataset.year, true);
+    });
+    tabs.addEventListener('keydown', (e) => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+      const all = $$('.tab', tabs), i = all.indexOf(document.activeElement);
+      let n = e.key === 'Home' ? 0 : e.key === 'End' ? all.length - 1 : i + (e.key === 'ArrowRight' ? 1 : -1);
+      n = (n + all.length) % all.length;
+      all[n].focus(); renderYear(+all[n].dataset.year, true); e.preventDefault();
+    });
+    renderYear(years[0], false);
+    $('#repo-count').textContent = ARCHIVE.length;
+  }
+
+  const langbar = $('#langbar');
+  if (langbar && typeof LANGS !== 'undefined') {
+    const total = LANGS.reduce((s, l) => s + l[1], 0);
+    langbar.innerHTML = `<div class="bar" role="img" aria-label="${LANGS.map((l) => `${l[0]} ${l[1]}`).join(', ')} repositories">${LANGS.map((l, i) => `<span style="flex:${l[1]};background:${l[2]};--i:${i}"></span>`).join('')}</div>
+      <ul>${LANGS.map((l) => `<li><i style="background:${l[2]}"></i>${esc(l[0])} <span class="num">${Math.round((l[1] / total) * 100)}%</span></li>`).join('')}</ul>`;
+  }
+
+  /* ---------- 4. badges: filter + show more ---------- */
+  const badgeGrid = $('#badges'), chips = $('#chips'), moreBtn = $('#badges-more');
+  const FIRST = 12;
+  let group = 'All', expanded = false;
+  function paintBadges() {
+    let shown = 0;
+    $$(':scope > li', badgeGrid).forEach((li) => {
+      const match = group === 'All' || li.dataset.g === group;
+      const visible = match && (expanded || group !== 'All' || shown < FIRST);
+      li.hidden = !visible;
+      if (visible) shown++;
+    });
+    const hiddenCount = BADGES.length - FIRST;
+    moreBtn.hidden = expanded || group !== 'All';
+    moreBtn.textContent = `Show all ${BADGES.length} (${hiddenCount} more)`;
+    $$('.chip', chips).forEach((c) => c.setAttribute('aria-pressed', c.dataset.g === group));
+  }
+  if (badgeGrid && typeof BADGES !== 'undefined') {
+    $('#badge-count').textContent = BADGES.length;
+    const groups = ['All', ...new Set(BADGES.map((b) => b.g))];
+    chips.innerHTML = groups.map((g) => `<button class="chip" type="button" data-g="${esc(g)}" aria-pressed="false">${g === 'All' ? `All ${BADGES.length}` : esc(g)}</button>`).join('');
+    badgeGrid.innerHTML = BADGES.map((b, i) => `
+      <li data-g="${esc(b.g)}"><button class="badge" type="button" data-badge="${i}" aria-label="${esc(b.n)}: view badge">
+        <div class="img"><img src="assets/certificates/thumbs/${esc(b.f)}.webp" alt="" width="440" height="400" loading="lazy" decoding="async"></div>
+        <span>${esc(b.n)}</span>
+      </button></li>`).join('');
+    chips.addEventListener('click', (e) => { const c = e.target.closest('.chip'); if (c) { group = c.dataset.g; paintBadges(); } });
+    moreBtn.addEventListener('click', () => { expanded = true; paintBadges(); });
+    paintBadges();
+  }
+
+  /* ---------- 5. detail sheet (slides up; Esc or backdrop closes) ---------- */
+  const sheet = $('#sheet'), sheetBody = $('#sheet-body');
+  let opener = null, closeTimer = 0;
+
+  function openSheet(html, label, hash) {
+    clearTimeout(closeTimer);
+    opener = document.activeElement;
+    sheetBody.innerHTML = html;
+    $('.sheet-panel', sheet).setAttribute('aria-label', label);
+    $('.sheet-panel', sheet).scrollTop = 0;
+    sheet.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    requestAnimationFrame(() => requestAnimationFrame(() => sheet.classList.add('is-open')));
+    $('.sheet-close', sheet).focus({ preventScroll: true });
+    if (hash) history.replaceState(null, '', '#' + hash);
+  }
+  function closeSheet() {
+    if (sheet.hidden) return;
+    sheet.classList.remove('is-open');
+    document.documentElement.style.overflow = '';
+    if (/^#(p|how)-/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
+    closeTimer = setTimeout(() => { sheet.hidden = true; sheetBody.innerHTML = ''; }, reduce ? 0 : 400);
+    if (opener && document.contains(opener)) opener.focus({ preventScroll: true });
+  }
+  sheet.addEventListener('click', (e) => { if (e.target.closest('[data-close]')) closeSheet(); });
+  document.addEventListener('keydown', (e) => {
+    if (sheet.hidden) return;
+    if (e.key === 'Escape') { closeSheet(); return; }
+    if (e.key === 'Tab') { // keep focus inside the sheet
+      const f = $$('a[href], button:not([disabled])', sheet).filter((x) => x.offsetParent !== null);
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+      else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+    }
+  });
+
+  function projectSheet(id) {
+    const i = PROJECTS.findIndex((p) => p.id === id);
+    if (i < 0) return;
+    const p = PROJECTS[i];
+    const flow = p.flow.map((f, k) => (k ? '<span class="to" aria-hidden="true">→</span>' : '') + `<div class="node${f[2] ? ' hl' : ''}"><b>${esc(f[0])}</b><small>${esc(f[1])}</small></div>`).join('');
+    openSheet(`
+      <p class="eyebrow">Project ${pad(i + 1)} · ${esc(p.where)} · ${esc(p.year)}</p>
+      <h2 class="t-h1" id="sheet-title">${esc(p.name)}</h2>
+      <p class="t-lead">${esc(p.line)}</p>
+      <div class="minis">${p.metrics.map((m) => `<div><b>${esc(m[0])}</b><small>${esc(m[1])}</small></div>`).join('')}</div>
+      <div class="cols">
+        <div><h4>The problem</h4><p>${esc(p.problem)}</p><h4>What I built</h4><p>${esc(p.built)}</p></div>
+        <div><h4>How it works</h4><p>${esc(p.how)}</p><h4>Result</h4><p>${esc(p.result)}</p></div>
+      </div>
+      ${p.note ? `<p class="callout">${esc(p.note)}</p>` : ''}
+      <h4>Architecture</h4><div class="flow">${flow}</div>
+      <h4>Stack</h4><div class="tags">${p.stack.map((s) => `<span>${esc(s)}</span>`).join('')}</div>
+      ${p.links.length ? `<div class="sheet-links">${p.links.map(([l, u], k) => `<a class="btn ${k ? 'btn-quiet' : 'btn-primary'}" href="${esc(u)}" target="_blank" rel="noopener">${esc(l)} ${arrowOut}</a>`).join('')}</div>` : ''}
+    `, p.name, 'p-' + p.id);
+  }
+
+  function habitSheet(i) {
+    const h = HABITS[i];
+    openSheet(`
+      <p class="eyebrow">How I work · ${pad(i + 1)}</p>
+      <h2 class="t-h1" id="sheet-title">${esc(h.title)}</h2>
+      <p class="t-lead">${esc(h.line)}</p>
+      <p style="margin-top:1.5rem;max-width:38rem">${esc(h.body)}</p>
+      <ul class="proofs">${h.proof.map(([name, url, text]) => `<li><b><a href="${esc(url)}" target="_blank" rel="noopener">${esc(name)} ${arrowOut}</a></b><p>${esc(text)}</p></li>`).join('')}</ul>
+    `, h.title, 'how-' + (i + 1));
+  }
+
+  function badgeSheet(i) {
+    const b = BADGES[i];
+    openSheet(`
+      <p class="eyebrow">Google Cloud · ${esc(b.g)}</p>
+      <h2 class="t-h2" id="sheet-title" style="margin-top:.9rem;padding-right:4rem">${esc(b.n)}</h2>
+      <div class="badge-view"><img src="assets/certificates/${esc(b.f)}.png" alt="${esc(b.n)} badge"></div>
+    `, b.n);
+  }
+
+  document.addEventListener('click', (e) => {
+    const o = e.target.closest('[data-open]'); if (o) { projectSheet(o.dataset.open); return; }
+    const h = e.target.closest('[data-habit]'); if (h) { habitSheet(+h.dataset.habit); return; }
+    const b = e.target.closest('[data-badge]'); if (b) badgeSheet(+b.dataset.badge);
+  });
+
+  // deep links: /Portfolio/#p-vox opens that breakdown
+  const deep = location.hash.match(/^#p-([\w-]+)$/);
+  if (deep && PROJECTS.some((p) => p.id === deep[1])) {
+    const ch = $('#p-' + deep[1]);
+    if (ch) ch.scrollIntoView();
+    projectSheet(deep[1]);
+  }
+
+  /* ---------- 6. nav: hide on the way down, show on the way up; progress line ---------- */
+  const nav = $('#nav'), bar = $('#progress'), cue = $('#cue');
+  const menuBtn = $('#menu-btn'), menu = $('#menu');
+  let lastY = scrollY, ticking = false;
+  function onScroll() {
+    const y = scrollY, max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = `scaleX(${max > 0 ? Math.min(1, y / max) : 0})`;
+    nav.classList.toggle('is-scrolled', y > 8);
+    const menuOpen = menuBtn.getAttribute('aria-expanded') === 'true';
+    if (!menuOpen) nav.classList.toggle('is-hidden', y > lastY && y > 240);
+    if (cue) cue.classList.toggle('is-gone', y > 40);
+    lastY = y; ticking = false;
+  }
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  nav.addEventListener('focusin', () => nav.classList.remove('is-hidden'));
+
+  // mobile menu
+  const setMenu = (open) => {
+    menuBtn.setAttribute('aria-expanded', open);
+    menuBtn.textContent = open ? 'Close' : 'Menu';
+    menu.hidden = !open;
+  };
+  menuBtn.addEventListener('click', () => setMenu(menuBtn.getAttribute('aria-expanded') !== 'true'));
+  menu.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { setMenu(false); menuBtn.focus(); } });
+  document.addEventListener('click', (e) => { if (!menu.hidden && !e.target.closest('#nav')) setMenu(false); });
+
+  // active section in the nav
+  const navLinks = $$('.nav-links a');
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      navLinks.forEach((a) => a.classList.toggle('is-active', a.getAttribute('href') === '#' + e.target.id));
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  ['about', 'receipts', 'work', 'projects', 'how', 'archive', 'credentials', 'contact'].forEach((id) => { const s = document.getElementById(id); if (s) spy.observe(s); });
+
+  /* ---------- 7. finale: plays its sequence once it's mostly on screen ---------- */
+  const finale = $('#contact');
+  if (finale && reduce) finale.classList.add('is-in');
+  else if (finale) {
+    new IntersectionObserver((entries, io) => {
+      if (entries[0].isIntersecting) { finale.classList.add('is-in'); io.disconnect(); }
+    }, { threshold: 0.45 }).observe(finale);
+  }
+
+  // copy email
+  const copy = $('#copy-email');
+  if (copy) copy.addEventListener('click', async () => {
+    const email = copy.dataset.email;
+    try { await navigator.clipboard.writeText(email); }
+    catch (_) {
+      const t = document.createElement('textarea'); t.value = email; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select(); try { document.execCommand('copy'); } catch (__) {} t.remove();
+    }
+    copy.textContent = 'Copied';
+    setTimeout(() => { copy.textContent = 'Copy'; }, 1800);
+  });
+
+  watch();
+  onScroll();
+})();
